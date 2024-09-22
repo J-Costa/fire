@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_22_171546) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_22_180359) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "user_type", ["admin", "student"]
+  create_enum "user_kind", ["admin", "student"]
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_22_171546) do
     t.string "name"
     t.string "email"
     t.string "password"
-    t.enum "type", enum_type: "user_type"
+    t.enum "kind", enum_type: "user_kind"
     t.string "document"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
