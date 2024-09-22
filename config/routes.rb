@@ -11,4 +11,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "dashboard#welcome"
+
+  devise_for :students, controllers: {
+    registrations: "student/registrations"
+  }
+  devise_for :admin, only: %i[sessions passwords], controllers: {
+    sessions: "admin/sessions"
+  }
 end
