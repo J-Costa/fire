@@ -18,4 +18,8 @@ Rails.application.routes.draw do
   devise_for :admin, only: %i[sessions passwords], controllers: {
     sessions: "admin/sessions"
   }
+
+  namespace :admin do
+    resources :courses, only: %i[index show new create edit update destroy]
+  end
 end
