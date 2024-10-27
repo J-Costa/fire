@@ -1,3 +1,5 @@
 class DashboardController < ApplicationController
-  def welcome; end
+  def welcome
+    @featured_courses = Course.order(featured: :desc).limit(3)
+  end
 end

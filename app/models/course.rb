@@ -5,5 +5,5 @@ class Course < ApplicationRecord
   validates :name, :description, :featured, presence: true
   validates :name, uniqueness: true
   validates :description, length: { minimum: 10 }
-  validates :featured, numericality: { in: 1..10 }
+  validates :featured, numericality: { in: 1..9 }
 end
