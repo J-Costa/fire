@@ -1,26 +1,28 @@
 <div x-data="carousel()" x-init="startCarousel()" class="relative w-full h-[50dvh] overflow-hidden">
   <!-- Slides -->
-  <template x-for="(slide, index) in slides" :key="index">
-    <div x-show="currentSlide === index" class="absolute inset-0 transition-all duration-500">
-      <img :src="slide" alt="cursos" class="w-full h-full object-cover object-center filter blur-sm">
-      <div class="absolute inset-0 flex items-center justify-center">
-        <h2 class="text-white text-2xl font-bold">Texto do Slide <span x-text="index + 1"></span></h2>
+  <template x-for="(slide, slideIndex) in slides" :key="slideIndex">
+    <div x-show="currentSlide === slideIndex" class="absolute inset-0 transition-all duration-500">
+      <img :src="slide.image" alt="cursos" class="w-full h-full object-cover object-center filter blur-sm">
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black bg-opacity-50">
+        <h2 class="text-white text-2xl font-bold" x-text="slide.name"></h2>
+        <p class="text-white mt-2" x-text="slide.description"></p>
+        <a :href="slide.link" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">Saiba mais</a>
       </div>
     </div>
   </template>
 
   <!-- Previous Button -->
-  <button @click="prevSlide()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+  <button @click="prevSlide()" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
     &#10094;
   </button>
 
   <!-- Next Button -->
-  <button @click="nextSlide()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+  <button @click="nextSlide()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
     &#10095;
   </button>
 
   <!-- Indicators -->
-  <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-2">
+  <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
     <template x-for="(slide, index) in slides" :key="index">
       <button @click="currentSlide = index" :class="{'bg-red-500': currentSlide === index, 'bg-white': currentSlide !== index}" class="w-3 h-3 rounded-full"></button>
     </template>
@@ -31,7 +33,16 @@
   function carousel() {
     return {
       currentSlide: 0,
-      slides: ['<%= asset_path('slides/slide1.jpg') %>', '<%= asset_path('slides/slide2.jpg') %>', '<%= asset_path('slides/slide3.jpg') %>'],
+      slides: [
+        <% @featured_courses.each_with_index do |course, index| %>
+          {
+            image: '<%= asset_path("slides/slide#{index + 1}") %>',
+            name: '<%= course.name %>',
+            description: '<%= course.description %>',
+            link: ''
+          },
+        <% end %>
+      ],
       startCarousel() {
         setInterval(() => {
           this.nextSlide();
