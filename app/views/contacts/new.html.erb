@@ -70,11 +70,27 @@
               <%= f.phone_field :phone, class: "block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
             </div>
           </div>
+          <h2 class="mt-2.5 font-medium text-gray-900">Cursos de interesse:</h2>
+          <div class="sm:col-span-2">
+            <div class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+              <%= collection_check_boxes :enrollments, :course_ids, @courses, :id, :name do |box| %>
+                <div class="space-y-2">
+                  <%= box.label class: "flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-red-50" do  %>
+                    <div class="flex items-center">
+                      <%= box.check_box class: "size-4 rounded border-gray-300" %>
+                      <div>
+                        <strong class="ml-2 font-medium text-gray-900"><%= box.text %></strong>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
         </div>
         <div class="mt-8 flex justify-end">
           <%= f.submit "Registrar dados para contato", class: "rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
         </div>
-        <div class="my-52"></div>
       </div>
       </form>
     <% end %>
