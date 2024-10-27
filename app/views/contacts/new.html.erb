@@ -75,9 +75,9 @@
             <div class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
               <%= collection_check_boxes :enrollments, :course_ids, @courses, :id, :name do |box| %>
                 <div class="space-y-2">
-                  <%= box.label class: "flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-red-50" do  %>
+                  <%= box.label class: "flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-red-50" do %>
                     <div class="flex items-center">
-                      <%= box.check_box class: "size-4 rounded border-gray-300" %>
+                      <%= box.check_box class: "size-4 rounded border-gray-300 accent-red-500 text-red-500 checked:bg-red-500 focus:ring-red-500 active:ring-red-500" %>
                       <div>
                         <strong class="ml-2 font-medium text-gray-900"><%= box.text %></strong>
                       </div>
