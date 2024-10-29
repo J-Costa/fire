@@ -1,8 +1,7 @@
 class Admin::CoursesController < Admin::BaseController
-
   before_action :prepare_course, only: %i[new create]
   before_action :set_course, only: %i[edit update]
-  
+
   def index
     @courses = Course.order(featured: :desc)
   end
@@ -13,7 +12,7 @@ class Admin::CoursesController < Admin::BaseController
     @course = Course.new(course_params)
 
     if @course.save
-      redirect_to admin_courses_path, notice: 'Curso cadastrado com sucesso'
+      redirect_to admin_courses_path, notice: "Curso cadastrado com sucesso"
     else
       flash.now[:alert] = @course.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity
@@ -24,7 +23,7 @@ class Admin::CoursesController < Admin::BaseController
 
   def update
     if @course.update(course_params)
-      redirect_to admin_courses_path, notice: 'Curso atualizado com sucesso'
+      redirect_to admin_courses_path, notice: "Curso atualizado com sucesso"
     else
       flash.now[:alert] = @course.errors.full_messages.to_sentence
       render :edit, status: :unprocessable_entity
