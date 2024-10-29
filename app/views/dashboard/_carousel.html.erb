@@ -39,7 +39,7 @@
             image: '<%= asset_path("slides/slide#{index + 1}") %>',
             name: '<%= course.name %>',
             description: '<%= course.description %>',
-            link: ''
+            link: '<%= new_contact_path(course_id: course.id) %>'
           },
         <% end %>
       ],
