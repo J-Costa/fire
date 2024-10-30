@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :courses, only: %i[index show new create edit update destroy]
+    resources :enrollments, only: %i[index]
   end
 
   resources :contacts, only: %i[new create]
