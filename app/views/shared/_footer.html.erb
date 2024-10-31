@@ -100,11 +100,11 @@
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <p class="font-medium text-gray-300">Serviços</p>
+          <%# <p class="font-medium text-gray-300">Serviços</p> %>
 
           <ul class="mt-6 space-y-4 text-sm">
             <li>
-              <a href="#" class="text-gray-200 transition hover:opacity-75"> Para empresas </a>
+              <%# <a href="#" class="text-gray-200 transition hover:opacity-75"> Para empresas </a> %>
             </li>
 
             <%# <li>
@@ -130,11 +130,11 @@
 
           <ul class="mt-6 space-y-4 text-sm">
             <li>
-              <a href="#" class="text-gray-200 transition hover:opacity-75"> Cursos </a>
+              <%# <a href="#" class="text-gray-200 transition hover:opacity-75"> Cursos </a> %>
             </li>
 
             <li>
-              <a href="#" class="text-gray-200 transition hover:opacity-75"> Contato </a>
+              <%= link_to "Contato", new_contact_path, class: "text-gray-200 transition hover:opacity-75" %>
             </li>
 
           </ul>
