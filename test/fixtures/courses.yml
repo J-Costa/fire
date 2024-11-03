@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
-  featured: MyString
+  name: Curso 1
+  description: Descrição do curso 1
+  featured: 9
 
 two:
-  name: MyString
-  description: MyString
-  featured: MyString
+  name: Curso 2
+  description: Descrição do curso 2
+  featured: 9
