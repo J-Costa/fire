@@ -6,8 +6,3 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: false
-
-# Prefer `refute` over `assert_not`
-Minitest/AssertRefute:
-  Enabled: true
-  PreferRefute: true

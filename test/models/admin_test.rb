@@ -10,6 +10,6 @@ class AdminTest < ActiveSupport::TestCase
   test "email must be unique" do
     duplicate_admin = Admin.new(name: "admin", email: users(:admin_one).email, password: "password")
 
-    refute duplicate_admin.valid?
+    assert_not duplicate_admin.valid?
   end
 end

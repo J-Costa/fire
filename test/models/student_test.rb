@@ -10,37 +10,37 @@ class StudentTest < ActiveSupport::TestCase
 
   test "name should be present" do
     @student.name = " "
-    refute @student.valid?
+    assert_not @student.valid?
   end
 
   test "email should be present" do
     @student.email = " "
-    refute @student.valid?
+    assert_not @student.valid?
   end
 
   test "phone should be present" do
     @student.phone = " "
-    refute @student.valid?
+    assert_not @student.valid?
   end
 
   test "email should be unique" do
     duplicate_student = @student.dup
     @student.save
-    refute duplicate_student.valid?
+    assert_not duplicate_student.valid?
   end
 
   test "email should be valid" do
     @student.email = "invalid"
-    refute @student.valid?
+    assert_not @student.valid?
   end
 
   test "phone should have a minimum length" do
     @student.phone = "1" * 9
-    refute @student.valid?
+    assert_not @student.valid?
   end
 
   test "phone should have a maximum length" do
     @student.phone = "1" * 12
-    refute @student.valid?
+    assert_not @student.valid?
   end
 end
