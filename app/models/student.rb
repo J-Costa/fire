@@ -1,4 +1,5 @@
 class Student < User
+  default_scope { where(kind: :student) }
   attribute :kind, :enum, default: :student
 
   has_many :enrollments
