@@ -10,17 +10,14 @@
       </div>
     </div>
   </template>
-
   <!-- Previous Button -->
   <button @click="prevSlide()" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
     &#10094;
   </button>
-
   <!-- Next Button -->
   <button @click="nextSlide()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
     &#10095;
   </button>
-
   <!-- Indicators -->
   <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
     <template x-for="(slide, index) in slides" :key="index">
@@ -28,7 +25,6 @@
     </template>
   </div>
 </div>
-
 <script>
   function carousel() {
     return {
@@ -36,9 +32,9 @@
       slides: [
         <% @featured_courses.each_with_index do |course, index| %>
           {
-            image: '<%= asset_path("slides/slide#{index + 1}.jpg") %>',
-            name: '<%= course.name %>',
-            description: '<%= course.description %>',
+            image: '<%= image_path("slides/slide#{index + 1}.jpg") %>',
+            name: '<%= j course.name %>',
+            description: '<%= j course.description %>',
             link: '<%= new_contact_path(course_id: course.id) %>'
           },
         <% end %>
