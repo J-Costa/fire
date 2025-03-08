@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   devise_for :students, controllers: {
     registrations: "student/registrations"
   }
-  devise_for :admin, only: %i[sessions passwords], controllers: {
+  devise_for :admins, only: %i[sessions passwords], controllers: {
     sessions: "admin/sessions"
   }
 
