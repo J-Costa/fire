@@ -100,7 +100,7 @@ jobs:
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
 
-      - name: Octocov
-        uses: "k1LoW/octocov-action@v1"
+      - name: Run octocov
+        uses: k1LoW/octocov-action@v1.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
