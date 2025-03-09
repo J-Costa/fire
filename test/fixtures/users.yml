@@ -4,6 +4,7 @@ admin_one:
   name: admin
   email: admin@admin.com
   password: "@admin1234"
+  encrypted_password: <%= Devise::Encryptor.digest(User, "@admin1234") %>
   kind: admin
   document:
   confirmed_at: <%= Time.now %>

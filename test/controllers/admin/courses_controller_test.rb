@@ -1,8 +1,6 @@
 require "test_helper"
 
 class Admin::CoursesControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
-
   setup do
     sign_in users(:admin_one), scope: :admin
   end
