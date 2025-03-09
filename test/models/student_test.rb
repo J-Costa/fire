@@ -4,6 +4,7 @@ class StudentTest < ActiveSupport::TestCase
   setup do
     @student = Student.new(name: "Example User", email: "student@example.com", phone: "11999999999")
   end
+
   test "should be valid" do
     assert @student.valid?
   end
@@ -24,9 +25,8 @@ class StudentTest < ActiveSupport::TestCase
   end
 
   test "email should be unique" do
-    skip "error"
     duplicate_student = @student.dup
-    duplicate_student.save
+    @student.save
 
     assert_not duplicate_student.valid?
   end
