@@ -6,6 +6,7 @@ admin_one:
   password: "@admin1234"
   kind: admin
   document:
+  confirmed_at: <%= Time.now %>
 
 student_one:
   name: student
