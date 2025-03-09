@@ -15,9 +15,8 @@ diff:
   datastores:
     - artifact://${GITHUB_REPOSITORY}
 comment:
-  if: is_pull_request
-  jobSummary: true
 report:
   if: is_default_branch
-  datastores:
-    - artifact://${GITHUB_REPOSITORY}
+datastores:
+  - artifact://${GITHUB_REPOSITORY}
+summary:
