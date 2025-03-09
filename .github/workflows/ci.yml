@@ -104,6 +104,4 @@ jobs:
         uses: "k1LoW/octocov-action@v1"
         with:
           config: .github/octocov.yml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          head: ${{ github.sha }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
