@@ -6,9 +6,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <link rel="manifest" href="/manifest.json">
     <%= favicon_link_tag 'logo krypton.jpg', class: "rounded-full" %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
@@ -16,23 +14,16 @@
     <%= javascript_importmap_tags %>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
-
   <body>
-    <main>
+    <div>
       <%= render "shared/navbar" %>
       <%= render "shared/alerts" %>
-      <%= yield %>
-      <%= render "shared/footer" %>
-    </main>
-    <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-          <div class="vw-plugin-top-wrapper"></div>
-        </div>
     </div>
-    <%# <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-      new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script> %>
+    <main class="min-h-screen bg-gray-50">
+      <%= yield %>
+    </main>
+    <div>
+      <%= render "shared/footer" %>
+    </div>
   </body>
 </html>

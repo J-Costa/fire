@@ -25,5 +25,5 @@ Rails.application.routes.draw do
   end
 
   resources :contacts, only: %i[new create]
-  resources :courses, only: %i[show]
+  resources :courses, only: %i[show index]
 end
