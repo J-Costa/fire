@@ -35,7 +35,7 @@
             image: '<%= image_path("slides/slide#{index + 1}.jpg") %>',
             name: '<%= j course.name %>',
             description: '<%= j course.description %>',
-            link: '<%= new_contact_path(course_id: course.id) %>'
+            link: '<%= course_path(course.id) %>'
           },
         <% end %>
       ],

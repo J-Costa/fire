@@ -18,7 +18,7 @@
             <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
               <p class="flex-auto"><%= course.description %></p>
               <p class="mt-6">
-                <%= link_to new_contact_path(course_id: course.id), class: "text-sm font-semibold leading-6 text-red-600" do %>
+                <%= link_to course_path(course.id), class: "text-sm font-semibold leading-6 text-red-600" do %>
                   Saiba mais <span aria-hidden="true">→</span>
                 <% end %>
               </p>
