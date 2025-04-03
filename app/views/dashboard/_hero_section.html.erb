@@ -5,27 +5,8 @@
       <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Tudo que você precisa para se formar como bombeiro civil</p>
       <p class="mt-6 text-lg leading-8 text-gray-600">Além de vários outros cursos que podem ajudá-lo na tão sonhada nova oportunidade de emprego.</p>
     </div>
-    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-      <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-        <% @featured_courses.each do |course| %>
-          <div class="flex flex-col">
-            <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-red-600">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-              </svg>
-              <%= course.name %>
-            </dt>
-            <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-              <p class="flex-auto"><%= course.description %></p>
-              <p class="mt-6">
-                <%= link_to course_path(course.id), class: "text-sm font-semibold leading-6 text-red-600" do %>
-                  Saiba mais <span aria-hidden="true">→</span>
-                <% end %>
-              </p>
-            </dd>
-          </div>
-        <% end %>
-      </dl>
+    <div class="mx-auto max-w-2xl text-center sm:mt-20 lg:mt-24 lg:max-w-none">
+      <%= render "shared/hero_courses" %>
     </div>
   </div>
 </div>

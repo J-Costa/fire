@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   def index
-    @courses = Course.order(:featured)
+    @courses = Course.order(featured: :desc)
   end
 
   def show

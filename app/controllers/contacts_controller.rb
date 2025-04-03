@@ -1,7 +1,9 @@
 class ContactsController < ApplicationController
   before_action :prepare_contact, only: [:new, :create]
 
-  def new; end
+  def new
+    @email = params["email"]
+  end
 
   def create
     Student.transaction do
@@ -27,7 +29,7 @@ class ContactsController < ApplicationController
 
   def prepare_contact
     @student = Student.new
-    @courses = Course.order(featured: :desc)
+    @courses = Course.order(featured: :desc).limit(4)
   end
 
   def student_params

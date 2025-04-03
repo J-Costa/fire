@@ -1,0 +1,42 @@
+pt-BR:
+  activerecord:
+    models:
+      course:
+        one: "Curso"
+        other: "Cursos"
+      student:
+        one: "Aluno"
+        other: "Alunos"
+      user:
+        one: "Usuário"
+        other: "Usuários"
+      enrollment:
+        one: "Matrícula"
+        other: "Matrículas"
+    attributes:
+      course:
+        name: "Nome"
+        description: "Descrição"
+        details: "Detalhes"
+        featured: "Destaque"
+      student:
+        name: "Nome"
+        email: "E-mail"
+        phone: "Telefone"
+      user:
+        email: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirmação de senha"
+        current_password: "Senha atual"
+        reset_password_token: "Token de redefinição de senha"
+        remember_created_at: "Lembrar criado em"
+        sign_in_count: "Contagem de acessos"
+        current_sign_in_at: "Acesso atual em"
+        last_sign_in_at: "Último acesso em"
+        current_sign_in_ip: "IP do acesso atual"
+        last_sign_in_ip: "IP do último acesso"
+      enrollment:
+        user_id: "Aluno"
+        course_id: "Curso"
+        user: "Aluno"
+        course: "Curso"
