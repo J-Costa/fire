@@ -117,7 +117,7 @@
     <div class="space-y-1 pb-3 pt-2">
       <!-- Current: "bg-yellow-50 border-yellow-500 text-red-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
       <%= link_to "Home", root_path, class: "#{current_page?("/") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
-      <%# link_to "Cursos", "", class: "#{current_page?("/courses") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+      <%= link_to "Cursos", courses_path, class: "#{current_page?("/courses") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
       <%= link_to "Contato", new_contact_path, class: "#{current_page?("/contacts/new") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
     </div>
     <% if current_admin %> <%# || current_student TODO: Criar metodo para current_user e ter menu diferentes para admin e student %>
