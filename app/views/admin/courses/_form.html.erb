@@ -45,8 +45,16 @@
                   <p class="pl-1">ou arraste e solte</p>
                 </div>
                 <p class="text-xs leading-5 text-gray-600">PNG, JPG, JPEG até 5MB</p>
-                <% if @course.marketing.attached? %>
-                  <p class="mt-2 text-sm text-green-600">Imagem atual: <%= @course.marketing.representation(resize_to_limit: [300, 300]) %></p>
+                <% if f.object.persisted? && f.object.marketing.present? %>
+                  <div class="mt-4 mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Imagem atual do curso</label>
+                    <div class="w-full max-w-md mx-auto">
+                      <div class="relative rounded-lg overflow-hidden shadow-md" style="max-height: 250px;">
+                        <%= image_tag f.object.marketing, class: "w-full h-auto", alt: f.object.name %>
+                      </div>
+                      <p class="text-xs text-gray-500 mt-2">Esta é a imagem atual exibida como marketing do curso</p>
+                    </div>
+                  </div>
                 <% end %>
               </div>
             </div>
