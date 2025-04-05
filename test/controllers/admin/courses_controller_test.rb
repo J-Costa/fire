@@ -68,7 +68,8 @@ class Admin::CoursesControllerTest < ActionDispatch::IntegrationTest
       course: {
         name: "Updated Course",
         description: "This is an updated course.",
-        featured: 1
+        featured: 1,
+        marketing: fixture_file_upload("sample_image.jpg", "image/jpg")
       }
     }
 
@@ -99,5 +100,45 @@ class Admin::CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_equal courses(:one).name, course.name
     assert_equal courses(:one).description, course.description
     assert_equal courses(:one).featured, course.featured
+  end
+
+  test "should remove marketing image" do
+    course = courses(:one)
+    course.marketing.attach(io: File.open(Rails.root.join("test/fixtures/files/sample_image.jpg")), filename: "sample_image.jpg")
+
+    patch admin_course_path(course), params: {
+      course: {
+        name: course.name,
+        description: course.description,
+        featured: 1
+      },
+      remove_marketing: "1"
+    }
+
+    assert_redirected_to admin_courses_path
+    follow_redirect!
+
+    assert_equal "Curso atualizado com sucesso", flash[:notice]
+    course.reload
+    refute course.marketing.attached?
+  end
+
+  test "should not remove marketing image when dont exists" do
+    course = courses(:one)
+    course.marketing.expects(:purge).never
+
+    patch admin_course_path(course), params: {
+      course: {
+        name: course.name,
+        description: course.description,
+        featured: 1
+      },
+      remove_marketing: "1"
+    }
+
+    assert_redirected_to admin_courses_path
+    follow_redirect!
+
+    assert_equal "Curso atualizado com sucesso", flash[:notice]
   end
 end
