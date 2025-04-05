@@ -23,6 +23,8 @@ class Admin::CoursesController < Admin::BaseController
 
   def update
     if @course.update(course_params)
+      check_marketing_image_removal
+
       redirect_to admin_courses_path, notice: "Curso atualizado com sucesso"
     else
       flash.now[:alert] = @course.errors.full_messages.to_sentence
@@ -42,5 +44,12 @@ class Admin::CoursesController < Admin::BaseController
 
   def set_course
     @course = Course.find(params[:id])
+  end
+
+  def check_marketing_image_removal
+    return unless params[:remove_marketing] == "1"
+    return unless @course.marketing.attached?
+
+    @course.marketing.purge
   end
 end

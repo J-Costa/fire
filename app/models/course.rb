@@ -12,8 +12,7 @@ class Course < ApplicationRecord
     if marketing.attached?
       Rails.application.routes.url_helpers.url_for(marketing)
     else
-      # Return path to default image
-      ActionController::Base.helpers.asset_path("default_course_image.jpg")
+      ActionController::Base.helpers.asset_path("default_course_image.jpeg")
     end
   end
 end

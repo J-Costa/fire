@@ -1,0 +1,1 @@
+two_marketing_blob: <%= ActiveStorage::FixtureSet.blob filename: "sample_image.jpg" %>

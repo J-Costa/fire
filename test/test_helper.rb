@@ -19,6 +19,8 @@ end
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
+require "mocha/minitest"
+
 Rails.application.eager_load!
 module ActiveSupport
   ActiveSupport.on_load(:action_mailer) do

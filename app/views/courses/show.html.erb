@@ -1,16 +1,16 @@
 <section class="bg-gray-50">
-  <div class="p-8 md:p-12 lg:px-16 lg:py-24 overflow-hidden">
+  <div class="p-8 md:p-12 lg:px-16 overflow-hidden">
     <!-- Course header with banner image -->
-    <div class="relative mx-auto max-w-lg text-center">
+    <div class="relative mx-auto max-w-xl md:max-w-3xl lg:max-w-5xl text-center">
       <div class="absolute inset-0 z-0 rounded-lg overflow-hidden">
-        <%= image_tag @course.marketing, alt: @course.name %>
+        <%= image_tag @course.marketing_image_url, alt: @course.name, class: "w-full h-full object-cover" %>
         <div class="absolute inset-0 bg-gradient-to-b from-gray-900/60 to-gray-900/30"></div>
       </div>
-      <div class="relative z-10 px-6 py-12">
-        <h2 class="text-2xl font-bold text-white md:text-3xl drop-shadow-md">
+      <div class="relative z-10 px-6 py-12 md:py-16 lg:py-20">
+        <h2 class="text-2xl font-bold text-white md:text-3xl lg:text-4xl drop-shadow-md">
           <%= @course.name %>
         </h2>
-        <p class="text-gray-100 sm:mt-4 sm:block drop-shadow">
+        <p class="text-gray-100 sm:mt-4 sm:block drop-shadow max-w-2xl mx-auto">
           <%= @course.description %>
         </p>
       </div>
@@ -20,7 +20,6 @@
       <h2 class="text-xl font-bold text-gray-900 md:text-3xl text-center mb-6">
         Mais informações sobre o curso
       </h2>
-      <!-- Course details formatted as a block -->
       <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
         <% @course.details.to_s.split("\n").each do |paragraph| %>
           <% unless paragraph.strip.empty? %>
