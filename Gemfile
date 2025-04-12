@@ -20,6 +20,7 @@ gem "tailwindcss-rails", "~> 3.3.1"
 gem "jbuilder"
 gem "devise"
 gem "ostruct"
+gem "mailjet"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
