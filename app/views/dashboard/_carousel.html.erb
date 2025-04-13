@@ -32,7 +32,7 @@
       slides: [
         <% @featured_courses.each_with_index do |course, index| %>
           {
-            image: '<%= course.marketing_image_url %>',
+            image: '<%= course.marketing %>',
             name: '<%= j course.name %>',
             description: '<%= j course.description %>',
             link: '<%= course_path(course.id) %>'

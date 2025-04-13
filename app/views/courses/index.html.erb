@@ -1,7 +1,7 @@
 <section class="overflow-hidden bg-gray-50 sm:grid sm:grid-cols-2">
   <% @courses.each_with_index do |course, i| %>
     <% if i.odd? %>
-      <%= image_tag course.marketing_image_url, alt: course.name, class: "hidden sm:inline sm:h-full" %>
+      <%= image_tag course.marketing, alt: course.name, class: "hidden sm:inline sm:h-full" %>
     <% end %>
     <div class="p-8 md:p-12 lg:px-16 lg:py-24">
       <div class="mx-auto max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
@@ -17,10 +17,10 @@
       </div>
     </div>
     <% if i.even? %>
-      <%= image_tag course.marketing_image_url, alt: course.name, class: "hidden sm:inline sm:h-full"  %>
+      <%= image_tag course.marketing, alt: course.name, class: "hidden sm:inline sm:h-full"  %>
     <% end %>
     <div class="w-full block sm:hidden mb-8">
-      <%= image_tag course.marketing_image_url, alt: course.name,
+      <%= image_tag course.marketing, alt: course.name,
           class: "h-56 w-full object-cover rounded-lg shadow-md"  %>
     </div>
   <% end %>
