@@ -39,6 +39,9 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # Set the default host for URL generation in production
+  config.action_controller.default_url_options = { host: "https://krypton-treinamentos-60962dad1978.herokuapp.com" }
+
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
