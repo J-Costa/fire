@@ -17,12 +17,14 @@ Rails.application.routes.draw do
     registrations: "student/registrations"
   }
   devise_for :admins, only: %i[sessions passwords], controllers: {
-    sessions: "admin/sessions"
+    sessions: "admin/sessions",
+    passwords: "admin/passwords"
   }
 
   namespace :admin do
     resources :courses, only: %i[index show new create edit update destroy]
     resources :enrollments, only: %i[index]
+    resources :passwords, only: %i[new create edit update]
   end
 
   resources :contacts, only: %i[new create]

@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class Admin::PasswordsController < Devise::PasswordsController
+  layout "login", only: %i[new edit update]
+
   # GET /resource/password/new
-  # def new
-  #   super
-  # end
+  def new
+    super
+  end
 
   # POST /resource/password
   # def create
@@ -12,14 +14,14 @@ class Admin::PasswordsController < Devise::PasswordsController
   # end
 
   # GET /resource/password/edit?reset_password_token=abcdef
-  # def edit
-  #   super
-  # end
+  def edit
+    super
+  end
 
   # PUT /resource/password
-  # def update
-  #   super
-  # end
+  def update
+    super
+  end
 
   # protected
 
@@ -31,4 +33,5 @@ class Admin::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+
 end

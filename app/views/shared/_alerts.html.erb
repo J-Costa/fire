@@ -19,7 +19,13 @@
     </div>
   </div>
 <% end %>
-<% if flash.alert %>
+<% begin %>
+  <% errors = resource.errors %>
+<% rescue NameError %>
+  <% errors = nil %>
+<% end %>
+<% if flash.alert || !errors.blank? %>
+    <% message = flash.alert || errors&.full_messages&.join(", ") %>
     <div x-data="{ showNotice: true }" x-show="showNotice" role="alert" class="rounded-xl border border-gray-100 p-4 bg-red-100">
       <div class="flex items-start gap-4">
         <span class="text-red-600">
@@ -29,7 +35,7 @@
         </span>
         <div class="flex-1">
           <strong class="block font-medium text-red-900"> Alerta </strong>
-          <p class="mt-1 text-sm text-gray-700"><%= flash.alert %></p>
+          <p class="mt-1 text-sm text-gray-700"><%= message %></p>
         </div>
         <button @click="showNotice = false" class="text-gray-500 transition hover:text-gray-600">
           <span class="sr-only">Dismiss popup</span>

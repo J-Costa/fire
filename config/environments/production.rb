@@ -80,6 +80,16 @@ Rails.application.configure do
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false
+  config.action_mailer.smtp_settings = {
+    address:              "in-v3.mailjet.com",
+    port:                 587,
+    domain:               "kryptontreinamentos.com.br",
+    user_name:            ENV["MAILJET_API_KEY"],
+    password:             ENV["MAILJET_SECRET_KEY"],
+    authentication:       "plain",
+    enable_starttls_auto: true
+  }
+  config.action_mailer.default_url_options = { host: "kryptontreinamentos.com.br" }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
