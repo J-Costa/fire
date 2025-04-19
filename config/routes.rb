@@ -16,9 +16,10 @@ Rails.application.routes.draw do
   devise_for :students, controllers: {
     registrations: "student/registrations"
   }
-  devise_for :admins, only: %i[sessions passwords], controllers: {
+  devise_for :admins, only: %i[sessions passwords confirmations], controllers: {
     sessions: "admin/sessions",
-    passwords: "admin/passwords"
+    passwords: "admin/passwords",
+    confirmations: "admin/confirmations"
   }
 
   namespace :admin do
