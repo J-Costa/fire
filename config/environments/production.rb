@@ -37,7 +37,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Set the default host for URL generation in production
   config.action_controller.default_url_options = { host: "https://krypton-treinamentos-60962dad1978.herokuapp.com" }
