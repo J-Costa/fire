@@ -40,7 +40,7 @@ Rails.application.configure do
   config.active_storage.service = :amazon
 
   # Set the default host for URL generation in production
-  config.action_controller.default_url_options = { host: "https://krypton-treinamentos-60962dad1978.herokuapp.com" }
+  config.action_controller.default_url_options = { host: "https://www.kryptontreinamentos.com.br" }
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
