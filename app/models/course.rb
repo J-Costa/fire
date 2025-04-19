@@ -7,12 +7,4 @@ class Course < ApplicationRecord
   validates :name, uniqueness: true
   validates :description, length: { minimum: 10 }
   validates :featured, numericality: { in: 1..9 }
-
-  def marketing_image_url
-    if marketing.attached?
-      Rails.application.routes.url_helpers.url_for(marketing)
-    else
-      ActionController::Base.helpers.asset_path("default_course_image.jpeg")
-    end
-  end
 end

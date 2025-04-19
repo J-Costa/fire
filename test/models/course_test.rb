@@ -47,19 +47,4 @@ class CourseTest < ActiveSupport::TestCase
     @course.featured = 0
     refute @course.valid?
   end
-
-  test "marketing image URL should return correct path when attached" do
-    course_with_image = courses(:two)
-    expected_url = Rails.application.routes.url_helpers.url_for(course_with_image.marketing)
-
-    assert course_with_image.marketing.attached?
-    assert_equal expected_url, course_with_image.marketing_image_url
-  end
-
-  test "marketing image URL should return default path when not attached" do
-    course_without_image = courses(:one)
-
-    refute course_without_image.marketing.attached?
-    assert_equal ActionController::Base.helpers.asset_path("default_course_image.jpeg"), course_without_image.marketing_image_url
-  end
 end
