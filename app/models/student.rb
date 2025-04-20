@@ -2,7 +2,7 @@ class Student < User
   default_scope { where(kind: :student) }
   attribute :kind, :enum, default: :student
 
-  has_many :enrollments
+  has_many :enrollments, foreign_key: :user_id
 
   validates :name, :email, :phone, presence: true
   validates :email, uniqueness: true
