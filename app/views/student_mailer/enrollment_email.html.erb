@@ -1,0 +1,12 @@
+<h2>Olá, <%= @student.name.capitalize %>!</h2>
+
+<% if @courses.one? %>
+  <p>Registramos seu interesse em se inscrever no curso: <%= @courses.pluck(:name).join(", ") %>.</p>
+<% else %>
+  <p>Registramos seu interesse em se inscrever nos cursos: <%= @courses.pluck(:name).join(", ") %>.</p>
+<% end %>
+
+<p>Assim que novas turmas estiverem disponíveis, entraremos em contato com você.</p>
+
+<p>Se você tiver alguma dúvida ou precisar de mais informações, não hesite em nos contatar.</p>
+<p>Ou entre em contato conosco através do <%= link_to "nosso site", root_url, style: "color: #6B7280; text-decoration: underline;" %>.</p>

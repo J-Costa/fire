@@ -8,6 +8,7 @@ class ContactsController < ApplicationController
   def create
     Student.transaction do
       @student = Student.new(student_params)
+      @student.skip_confirmation!
       if course_params.blank?
         flash.now[:alert] = "Selecione ao menos um curso"
         return render :new, status: :unprocessable_entity
@@ -17,6 +18,10 @@ class ContactsController < ApplicationController
         course_params.each do |course_id|
           Enrollment.create!(course_id: course_id, user_id: @student.reload.id)
         end
+        StudentMailer.with(student: @student,
+                           courses: @student.enrollments.map(&:course))
+                     .enrollment_email
+                     .deliver_later
         redirect_to root_path, notice: "Salvamos seu contato, assim que possível entraremos em contato."
       else
         flash.now[:alert] = @student.errors.full_messages.to_sentence
