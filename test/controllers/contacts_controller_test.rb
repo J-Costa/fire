@@ -37,14 +37,17 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create contact with course params" do
     assert_changes("Student.count") do
-      post contacts_url, params: {
-        contact: {
-          name: "joão",
-          email: "joao@joao.com",
-          phone: "11912345678" },
-          enrollments: {
-            course_ids: [courses(:one).id] } }
+      assert_emails 1 do
+        post contacts_url, params: {
+          contact: {
+            name: "joão",
+            email: "joao@joao.com",
+            phone: "11912345678" },
+            enrollments: {
+              course_ids: [courses(:one).id] } }
+      end
     end
+
     follow_redirect!
 
     assert_response :success
