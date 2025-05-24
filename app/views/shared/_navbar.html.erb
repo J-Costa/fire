@@ -126,7 +126,7 @@
       <div class="border-t border-gray-200 pb-3 pt-4">
         <div class="flex items-center px-4">
           <div class="flex-shrink-0">
-            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-white"><%= current_admin.name.first.upcase %></span>
+            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-white"><%= current_admin.name&.first&.upcase %></span>
           </div>
           <div class="ml-3">
             <div class="text-base font-medium text-gray-300"><%= current_admin.name %></div>
