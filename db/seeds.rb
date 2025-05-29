@@ -18,7 +18,7 @@ Course.create(name:        "Bombeiro Civil",
               details:     "Curso de Bombeiro Civil detalhado",
               featured:    9)
 
-# Adicionar imagem custom para o curso. No app, caso nao exista uma salva ele usa uma default... 
+# Adicionar imagem custom para o curso. No app, caso nao exista uma salva ele usa uma default...
 # image_path = Rails.root.join('app', 'assets', 'images', 'default_course_image.jpg')
 # if File.exist?(image_path)
 #   course.marketing.attach(io: File.open(image_path), filename: 'default_course_image.jpg', content_type: 'image/jpeg')
