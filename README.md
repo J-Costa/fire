@@ -12,6 +12,10 @@
 
 ### Rodando localmente apenas com o banco de dados no container
 - Você precisará do ruby instalado via algum gerenciador ou localmente
-  - Estou utilizando o [mise](https://mise.jdx.dev/) um gerenciador de várias ferramentas.
+  - Estou utilizando o [mise](https://mise.jdx.dev/), um gerenciador de várias ferramentas.
 - Também precisará do [Docker](https://docs.docker.com/engine/install/)
-- Suba o container do banco de dados com o comando ``
+- Suba o container do banco de dados com o comando `docker compose up` no terminal
+- Para configurar o banco de dados rode o comando `rails db:setup`
+  - Assim, serão criadas as tabelas e o seed com um curso e um usuário de Admin
+- Em outro terminal rode o comando `bin/dev` para subir o servidor
+- A aplicação estará acessível pelo endereço: `http://localhost:3000`
