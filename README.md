@@ -1,3 +1,9 @@
+Para maiores informações cheque a [Wiki](https://github.com/J-Costa/fire/wiki)
+
+For more info check the [Wiki](https://github.com/J-Costa/fire/wiki)
+
+***
+
 ### Configurando e rodando o projeto com devcontainer
 #### Preparação e ferramentas necessárias
 - [Instalar Docker](https://docs.docker.com/engine/install/)
