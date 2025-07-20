@@ -9,8 +9,8 @@
 #   end
 
 admin = Admin.create(name:    "admin",
-            password: "123456",
-            email:    "admin@admin.com")
+                     password: "123456",
+                     email:    "admin@admin.com")
 admin.confirm
 
 Course.create(name:        "Bombeiro Civil",
