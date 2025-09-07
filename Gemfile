@@ -8,7 +8,7 @@ gem "sprockets-rails"
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.6"
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 7.0"
+gem "puma", ">= 5.0"
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -23,12 +23,6 @@ gem "devise"
 gem "ostruct"
 gem "mailjet"
 gem "aws-sdk-s3", require: false
-gem "ahoy_matey"
-gem "geocoder"
-gem "solid_queue"
-gem "mission_control-jobs"
-gem "maxminddb"
-gem "geoip"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

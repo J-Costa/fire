@@ -74,7 +74,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
-  config.active_job.queue_adapter = :solid_queue
+  # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "fire_production"
 
   # Disable caching for Action Mailer templates even if Action Controller
@@ -113,7 +113,4 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
-  MissionControl::Jobs.http_basic_auth_user = ENV["JOBS_USER"]
-  MissionControl::Jobs.http_basic_auth_password = ["JOBS_SECRET"]
 end
