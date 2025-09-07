@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  authenticate :admin do
+    mount MissionControl::Jobs::Engine => "/jobs"
+  end
   default_url_options host: ENV.fetch("HOST", "localhost:3000")
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

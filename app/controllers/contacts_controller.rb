@@ -22,6 +22,7 @@ class ContactsController < ApplicationController
                            courses: @student.enrollments.map(&:course))
                      .enrollment_email
                      .deliver_later
+        NewEnrollmentMailer.with(emails: ENV["EMAILS_TO_NOTIFY"].split(";")).notify_admins.deliver_later
         redirect_to root_path, notice: "Salvamos seu contato, assim que possível entraremos em contato."
       else
         flash.now[:alert] = @student.errors.full_messages.to_sentence
