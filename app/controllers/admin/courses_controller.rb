@@ -15,7 +15,7 @@ class Admin::CoursesController < Admin::BaseController
       redirect_to admin_courses_path, notice: "Curso cadastrado com sucesso"
     else
       flash.now[:alert] = @course.errors.full_messages.to_sentence
-      render :new, status: :unprocessable_content
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class Admin::CoursesController < Admin::BaseController
       redirect_to admin_courses_path, notice: "Curso atualizado com sucesso"
     else
       flash.now[:alert] = @course.errors.full_messages.to_sentence
-      render :edit, status: :unprocessable_content
+      render :edit, status: :unprocessable_entity
     end
   end
 

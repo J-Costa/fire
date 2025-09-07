@@ -48,7 +48,7 @@ class Admin::CoursesControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_response :unprocessable_content
+    assert_response :unprocessable_entity
     assert_match "não pode ficar em branco", @response.body
   end
 
@@ -94,7 +94,7 @@ class Admin::CoursesControllerTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_response :unprocessable_content
+    assert_response :unprocessable_entity
     assert_match "não pode ficar em branco", @response.body
     course.reload
     assert_equal courses(:one).name, course.name
