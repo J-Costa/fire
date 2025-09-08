@@ -18,7 +18,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
             course_ids: [] } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "should not create contact without email" do
@@ -32,12 +32,13 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
             course_ids: [courses(:one).id] } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "should create contact with course params" do
+    ENV["ADMIN_EMAILS_TO_NOTIFY"] = [users(:admin_one).email, users(:student_one).email].join(";")
     assert_changes("Student.count") do
-      assert_emails 1 do
+      assert_emails 2 do
         post contacts_url, params: {
           contact: {
             name: "joão",
@@ -47,6 +48,8 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
               course_ids: [courses(:one).id] } }
       end
     end
+    assert_includes ActionMailer::Base.deliveries.map(&:to).flatten, users(:admin_one).email, "joao@joao.com"
+    assert_not_includes ActionMailer::Base.deliveries.map(&:to).flatten, users(:student_one).email
 
     follow_redirect!
 

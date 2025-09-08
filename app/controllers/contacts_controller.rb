@@ -11,7 +11,7 @@ class ContactsController < ApplicationController
       @student.skip_confirmation!
       if course_params.blank?
         flash.now[:alert] = "Selecione ao menos um curso"
-        return render :new, status: :unprocessable_entity
+        return render :new, status: :unprocessable_content
       end
 
       if @student.save
@@ -22,10 +22,11 @@ class ContactsController < ApplicationController
                            courses: @student.enrollments.map(&:course))
                      .enrollment_email
                      .deliver_later
+        NewEnrollmentMailer.notify_admins.deliver_later
         redirect_to root_path, notice: "Salvamos seu contato, assim que possível entraremos em contato."
       else
         flash.now[:alert] = @student.errors.full_messages.to_sentence
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
     end
   end
