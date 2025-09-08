@@ -23,6 +23,7 @@ gem "devise"
 gem "ostruct"
 gem "mailjet"
 gem "aws-sdk-s3", require: false
+gem "ahoy_matey"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
