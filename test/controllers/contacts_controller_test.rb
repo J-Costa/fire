@@ -18,7 +18,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
             course_ids: [] } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "should not create contact without email" do
@@ -32,7 +32,7 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
             course_ids: [courses(:one).id] } }
     end
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "should create contact with course params" do

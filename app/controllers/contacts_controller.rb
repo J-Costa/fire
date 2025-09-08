@@ -11,7 +11,7 @@ class ContactsController < ApplicationController
       @student.skip_confirmation!
       if course_params.blank?
         flash.now[:alert] = "Selecione ao menos um curso"
-        return render :new, status: :unprocessable_entity
+        return render :new, status: :unprocessable_content
       end
 
       if @student.save
