@@ -24,6 +24,8 @@ gem "ostruct"
 gem "mailjet"
 gem "aws-sdk-s3", require: false
 gem "ahoy_matey"
+gem "geocoder"
+gem "maxminddb"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
