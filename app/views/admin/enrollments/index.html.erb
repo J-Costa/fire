@@ -21,6 +21,7 @@
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Telefone</th>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Cursos de interesse</th>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Data de inscrição</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Contatado?</th>
               <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
                 <span class="sr-only">Botão</span>
               </th>
@@ -30,11 +31,18 @@
         <% if @enrollments.any? %>
           <% @enrollments.each do |enrollment| %>
             <tr class="even:bg-gray-50">
-              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"><%= enrollment.user.name %></td>
+              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"><%= link_to enrollment.user.name, edit_admin_student_path(enrollment.user) %></td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= enrollment.user.email %></td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= enrollment.user.phone %></td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Course.where(id: enrollment.course_ids.split(',')).map(&:name).to_sentence %></td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= l enrollment.user.created_at, format: :long %></td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                <% if enrollment.user.contacted?%>
+                  <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Sim</span>
+                <% else %>
+                  <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">Não</span>
+                <% end %>
+              </td>
               <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
                 <%# TODO: "adicionar botao para remover da listagem?" link_to "Contato realizado", '', class: "text-red-600 hover:text-red-900" %>
               </td>
