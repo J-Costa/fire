@@ -26,6 +26,8 @@ gem "aws-sdk-s3", require: false
 gem "ahoy_matey"
 gem "geocoder"
 gem "maxminddb"
+gem "barnes"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -57,8 +59,9 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
+  gem "awesome_print"
   gem "dotenv-rails"
+  gem "web-console"
 end
 
 group :test do
