@@ -26,7 +26,8 @@ class ContactsController < ApplicationController
         redirect_to root_path, notice: "Salvamos seu contato, assim que possível entraremos em contato."
       else
         flash.now[:alert] = @student.errors.full_messages.to_sentence
-        render :new, status: :unprocessable_content
+        @selected_course_ids = course_params
+        render :new, status: :unprocessable_content, course_ids: @selected_course_ids
       end
     end
   end
@@ -39,7 +40,7 @@ class ContactsController < ApplicationController
   end
 
   def student_params
-    params.require(:contact).permit(:name, :email, :phone)
+    params.require(:contact).permit(:name, :email, :phone).merge(current_sign_in_ip: request.remote_ip)
   end
 
   def course_params
