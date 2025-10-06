@@ -1,55 +1,39 @@
-<div x-data="carousel()" x-init="startCarousel()" class="relative w-full h-[50dvh] overflow-hidden">
-  <!-- Slides -->
-  <template x-for="(slide, slideIndex) in slides" :key="slideIndex">
-    <div x-show="currentSlide === slideIndex" class="absolute inset-0 transition-all duration-500">
-      <img :src="slide.image" alt="cursos" class="w-full h-full object-cover object-center filter blur-sm">
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black bg-opacity-50">
-        <h2 class="text-white text-2xl font-bold" x-text="slide.name"></h2>
-        <p class="text-white mt-2 whitespace-normal break-words max-w-prose" x-text="slide.description"></p>
-        <a :href="slide.link" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">Saiba mais</a>
+<div data-controller="carousel"
+     data-carousel-interval-value="5000"
+     class="relative w-full h-[50dvh] overflow-hidden">
+  <% @featured_courses.each_with_index do |course, index| %>
+    <div data-carousel-target="slide"
+         class="absolute inset-0 transition-all duration-500 ease-out
+                <%= index.zero? ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none' %>">
+      <img src="<%= course.marketing.attached? ? url_for(course.marketing) : asset_path('default_course_image.jpeg') %>"
+           alt="cursos"
+           class="w-full h-full object-cover object-center filter blur-sm">
+      <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4 bg-black/50">
+        <h2 class="text-white text-2xl font-bold"><%= course.name %></h2>
+        <p class="text-white mt-2 whitespace-normal break-words max-w-prose"><%= course.description %></p>
+        <%= link_to "Saiba mais", course_path(course.id), class: "mt-4 px-4 py-2 bg-red-500 text-white rounded" %>
       </div>
     </div>
-  </template>
-  <!-- Previous Button -->
-  <button @click="prevSlide()" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-    &#10094;
-  </button>
-  <!-- Next Button -->
-  <button @click="nextSlide()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
-    &#10095;
-  </button>
-  <!-- Indicators -->
-  <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-    <template x-for="(slide, index) in slides" :key="index">
-      <button @click="currentSlide = index" :class="{'bg-red-500': currentSlide === index, 'bg-white': currentSlide !== index}" class="w-3 h-3 rounded-full"></button>
-    </template>
-  </div>
+  <% end %>
+
+  <% if @featured_courses.size > 1 %>
+    <button data-action="click->carousel#prev"
+            class="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+      &#10094;
+    </button>
+    <button data-action="click->carousel#next"
+            class="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full">
+      &#10095;
+    </button>
+
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+      <% @featured_courses.each_with_index do |_, i| %>
+        <button data-action="click->carousel#goTo"
+                data-carousel-index-param="<%= i %>"
+                data-carousel-target="indicator"
+                class="w-3 h-3 rounded-full <%= i.zero? ? 'bg-red-500' : 'bg-white' %>">
+        </button>
+      <% end %>
+    </div>
+  <% end %>
 </div>
-<script>
-  function carousel() {
-    return {
-      currentSlide: 0,
-      slides: [
-        <% @featured_courses.each_with_index do |course, index| %>
-          {
-            image: '<%= course.marketing.attached? ? url_for(course.marketing) : asset_path("default_course_image.jpeg") %>',
-            name: '<%= j course.name %>',
-            description: '<%= j course.description %>',
-            link: '<%= course_path(course.id) %>'
-          },
-        <% end %>
-      ],
-      startCarousel() {
-        setInterval(() => {
-          this.nextSlide();
-        }, 5000);
-      },
-      nextSlide() {
-        this.currentSlide = (this.currentSlide === this.slides.length - 1) ? 0 : this.currentSlide + 1;
-      },
-      prevSlide() {
-        this.currentSlide = (this.currentSlide === 0) ? this.slides.length - 1 : this.currentSlide - 1;
-      }
-    }
-  }
-</script>
