@@ -3,65 +3,142 @@
     <%= image_tag "botijao.jpg", class: "absolute inset-0 h-full w-full object-cover" %>
   </div>
 
-  <div class="px-4 py-16 sm:px-6 lg:col-span-3 lg:px-8">
+  
+  <div class="px-4 py-16 sm:px-6 lg:col-span-3 lg:px-8 bg-black">
+    <p class="text-lg font-medium text-gray-300">Unidades</p>
     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
       <div>
-        <p>
-          <span class="text-xs uppercase tracking-wide text-gray-100"> Contato </span>
-          <a href="https://api.whatsapp.com/send?phone=5511982065921" class="flex text-2xl font-medium text-gray-300 hover:opacity-75 sm:text-3xl">
-            11 98206-5921
-           <%# <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" id="screenshot-fe0d3fca-d6d7-8158-8003-c77b0bc54f96" viewBox="2810 15562 448 512" style="-webkit-print-color-adjust::exact" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1">
-            <g id="shape-fe0d3fca-d6d7-8158-8003-c77b0bc54f96" data-testid="Graphics / Brands / whatsapp.svg">
-              <defs>
-                <clipPath id="frame-clip-fe0d3fca-d6d7-8158-8003-c77b0bc54f96-render-410" class="frame-clip frame-clip-def">
-                  <rect rx="0" ry="0" x="2810" y="15562" width="448" height="512" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)">
-                  </rect>
-                </clipPath>
-              </defs>
-              <g clip-path="url(#frame-clip-fe0d3fca-d6d7-8158-8003-c77b0bc54f96-render-410)" fill="none">
-                <g class="fills" id="fills-fe0d3fca-d6d7-8158-8003-c77b0bc54f96">
-                  <rect rx="0" ry="0" x="2810" y="15562" width="448" height="512" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)" class="frame-background">
-                  </rect>
-                </g>
-                <g class="frame-children">
-                  <g id="shape-fe0d3fca-d6d7-8158-8003-c77b0bc52382" data-testid="Graphics / Brands / whatsapp.svg" style="fill:#000000" rx="0" ry="0">
-                    <g id="shape-fe0d3fca-d6d7-8158-8003-c77b0bc52383" data-testid="base-background" style="display:none">
-                      <g class="fills" id="fills-fe0d3fca-d6d7-8158-8003-c77b0bc52383">
-                        <rect rx="0" ry="0" x="2810" y="15562" transform="matrix(1.000000, 0.000000, 0.000000, 1.000000, 0.000000, 0.000000)" width="448" height="512" fill="none" style="fill:none">
-                        </rect>
-                      </g>
-                    </g>
-                    <g id="shape-fe0d3fca-d6d7-8158-8003-c77b0bc52384" data-testid="svg-path">
-                      <g class="fills" id="fills-fe0d3fca-d6d7-8158-8003-c77b0bc52384">
-                        <path d="M3190.900,15659.100C3149.000,15617.100,3093.200,15594.000,3033.900,15594.000C2911.500,15594.000,2811.900,15693.600,2811.900,15816.000C2811.900,15855.100,2822.100,15893.300,2841.500,15927.000L2810.000,16042.000L2927.700,16011.100C2960.100,16028.800,2996.600,16038.100,3033.800,16038.100L3033.900,16038.100C3156.200,16038.100,3258.000,15938.500,3258.000,15816.100C3258.000,15756.800,3232.800,15701.100,3190.900,15659.100ZZM3033.900,16000.700C3000.700,16000.700,2968.200,15991.800,2939.900,15975.000L2933.200,15971.000L2863.400,15989.300L2882.000,15921.200L2877.600,15914.200C2859.100,15884.800,2849.400,15850.900,2849.400,15816.000C2849.400,15714.300,2932.200,15631.500,3034.000,15631.500C3083.300,15631.500,3129.600,15650.700,3164.400,15685.600C3199.200,15720.500,3220.600,15766.800,3220.500,15816.100C3220.500,15917.900,3135.600,16000.700,3033.900,16000.700ZZM3135.100,15862.500C3129.600,15859.700,3102.300,15846.300,3097.200,15844.500C3092.100,15842.600,3088.400,15841.700,3084.700,15847.300C3081.000,15852.900,3070.400,15865.300,3067.100,15869.100C3063.900,15872.800,3060.600,15873.300,3055.100,15870.500C3022.500,15854.200,3001.100,15841.400,2979.600,15804.500C2973.900,15794.700,2985.300,15795.400,2995.900,15774.200C2997.700,15770.500,2996.800,15767.300,2995.400,15764.500C2994.000,15761.700,2982.900,15734.400,2978.300,15723.300C2973.800,15712.500,2969.200,15714.000,2965.800,15713.800C2962.600,15713.600,2958.900,15713.600,2955.200,15713.600C2951.500,15713.600,2945.500,15715.000,2940.400,15720.500C2935.300,15726.100,2921.000,15739.500,2921.000,15766.800C2921.000,15794.100,2940.900,15820.500,2943.600,15824.200C2946.400,15827.900,2982.700,15883.900,3038.400,15908.000C3073.600,15923.200,3087.400,15924.500,3105.000,15921.900C3115.700,15920.300,3137.800,15908.500,3142.400,15895.500C3147.000,15882.500,3147.000,15871.400,3145.600,15869.100C3144.300,15866.600,3140.600,15865.200,3135.100,15862.500ZZ">
-                        </path>
-                      </g>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </g>
-          </svg>  %>
-          </a>
+        <div class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">São Bernardo do Campo (SBC)</div>
 
-          <%# <a href="https://api.whatsapp.com/send?phone=11982065921" class="block text-2xl font-medium text-gray-300 hover:opacity-75 sm:text-3xl">
-            11 98206-5921
-          </a> %>
-        </p>
-
-        <ul class="mt-8 space-y-1 text-sm text-gray-200">
+        <div>
           <p>
-            <span class="text-xs uppercase tracking-wide text-gray-50"> Aulas </span>
+            <span class="text-xs uppercase tracking-wide text-gray-100"> Contato </span>
+            <a href="https://api.whatsapp.com/send?phone=5511982065921" class="flex text-2xl font-medium text-gray-300 hover:opacity-75 sm:text-2xl">
+              11 98206-5921
+              <i class="ml-2 mt-1 align-middle">
+                <svg class="h-5 w-5 text-green-500 fill-current" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              </i>
+            </a>
           </p>
-          <div class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">SBC</div>
-          <li>Durante a semana: das 9h às 12h, 19h às 21h</li>
-          <li>Sábados: das 9h às 12h</li>
-          <div class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">Diadema</div>
-          <li>Segundas e Quintas: das 19h às 21h</li>
-          <li>Sábados: das 9h às 12h</li>
-        </ul>
 
-        <ul class="mt-8 flex gap-6">
+          <ul class="mt-8 space-y-2 text-sm text-gray-200">
+            <p class="mt-4">
+              <span class="text-xs uppercase tracking-wide text-gray-50"> Aulas </span>
+            </p>
+            <li>Durante a semana: das 9h às 12h, 19h às 21h</li>
+            <li class="mb-4">Sábados: das 9h às 12h</li>
+          </ul>
+
+          <ul class="mt-8 space-y-2 text-sm">
+            <p>
+              <span class="text-xs uppercase tracking-wide text-gray-50"> Endereço </span>
+            </p>
+            <li>
+              <a href="https://maps.app.goo.gl/uVeNGHYjWgkyLMpY7"
+                  target="_blank"
+                  class="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-5 shrink-0 text-gray-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <address class="-mt-0.5 flex-1 not-italic text-gray-200">
+                  Rua Marechal Deodoro, N° 1805, São Bernardo do Campo, Brasil
+                </address>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">Diadema</div>
+
+          <p>
+            <span class="text-xs uppercase tracking-wide text-gray-100"> Contato </span>
+            <a href="https://api.whatsapp.com/send?phone=5511985755827" class="flex text-2xl font-medium text-gray-300 hover:opacity-75 sm:text-2xl">
+              11 98575-5827
+              <i class="ml-2 mt-1 align-middle">
+                <svg class="h-5 w-5 text-green-500 fill-current" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              </i>
+            </a>
+          </p>
+
+          <ul class="mt-8 space-y-2 text-sm text-gray-200">
+            <p class="mt-4">
+              <span class="text-xs uppercase tracking-wide text-gray-50"> Aulas </span>
+            </p>
+            <li>Segundas e Quintas: das 19h às 21h</li>
+            <li>Sábados: das 9h às 12h</li>
+          </ul>
+
+          <ul class="mt-8 space-y-2 text-sm">
+              <p>
+                <span class="text-xs uppercase tracking-wide text-gray-50"> Endereço </span>
+              </p>
+            <li>
+              <a href="https://maps.app.goo.gl/tyiS2sDsFf6iBGuf6"
+                  target="_blank"
+                  class="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-5 shrink-0 text-gray-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <address class="-mt-0.5 flex-1 not-italic text-gray-200">
+                  Avenida Alda, Nº 48, sala 26, Centro, Diadema, Brasil
+                </address>
+              </a>
+            </li>
+          </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 border-t border-gray-100 pt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <p class="font-medium text-gray-300">Escola</p>
+        <ul class="mt-6 space-y-4 text-sm">
+          <li>
+            <%= link_to "Cursos", courses_path, class: "text-gray-200 transition hover:opacity-75" %>
+          </li>
+
+          <li>
+            <%= link_to "Contato", new_contact_path, class: "text-gray-200 transition hover:opacity-75" %>
+          </li>
+        </ul>
+      </div>
+    <div>
+      <ul class="mt-8 flex gap-6">
           <li>
             <a
               href="https://www.facebook.com/kryptontreinamentos/?locale=pt_BR"
@@ -97,191 +174,8 @@
               </svg>
             </a>
           </li>
-        </ul>
-      </div>
-
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div>
-          <%# <p class="font-medium text-gray-300">Serviços</p> %>
-
-          <ul class="mt-6 space-y-4 text-sm">
-            <li>
-              <%# <a href="#" class="text-gray-200 transition hover:opacity-75"> Para empresas </a> %>
-            </li>
-
-            <%# <li>
-              <a href="#" class="text-gray-200 transition hover:opacity-75"> Company Review </a>
-            </li>
-
-            <li>
-              <a href="#" class="text-gray-200 transition hover:opacity-75"> Accounts Review </a>
-            </li>
-
-            <li>
-              <a href="#" class="text-gray-200 transition hover:opacity-75"> HR Consulting </a>
-            </li>
-
-            <li>
-              <a href="#" class="text-gray-200 transition hover:opacity-75"> SEO Optimisation </a>
-            </li> %>
-          </ul>
-        </div>
-
-        <div>
-          <p class="font-medium text-gray-300">Escola</p>
-
-          <ul class="mt-6 space-y-4 text-sm">
-            <li>
-              <%= link_to "Cursos", courses_path, class: "text-gray-200 transition hover:opacity-75" %>
-            </li>
-
-            <li>
-              <%= link_to "Contato", new_contact_path, class: "text-gray-200 transition hover:opacity-75" %>
-            </li>
-
-          </ul>
-        </div>
-        <div class="text-center sm:text-left sm:col-span-2">
-          <p class="text-lg font-medium text-gray-300">Unidades</p>
-
-          <ul class="mt-8 space-y-4 text-sm">
-            <%# <li>
-              <a
-                class="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                href="#"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="size-5 shrink-0 text-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-
-                <span class="flex-1 text-sm text-gray-200">kryptontreinamentos@gmail.com</span>
-              </a>
-            </li> %>
-            <div class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">SBC</div>
-            <li>
-              <a
-                class="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                href="https://api.whatsapp.com/send?phone=5511982065921"
-                target="_blank"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="size-5 shrink-0 text-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-                
-
-                <span class="flex-1 text-gray-200">11 98206-5921</span>
-              </a>
-            </li>
-
-            <li>
-              <a href="https://maps.app.goo.gl/uVeNGHYjWgkyLMpY7"
-                 target="_blank"
-                 class="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="size-5 shrink-0 text-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <address class="-mt-0.5 flex-1 not-italic text-gray-200">
-                  Rua Marechal Deodoro, N° 1805, São Bernardo do Campo, Brasil
-                </address>
-              </a>
-            </li>
-            <div class="py-3 flex items-center text-sm text-gray-800 before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-white dark:before:border-neutral-600 dark:after:border-neutral-600">Diadema</div>
-            <li>
-              <a
-                class="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-                href="https://api.whatsapp.com/send?phone=5511985755827"
-                target="_blank"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="size-5 shrink-0 text-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-
-                <span class="flex-1 text-gray-200">11 98575-5827</span>
-              </a>
-            </li>
-
-            <li>
-              <a href="https://maps.app.goo.gl/tyiS2sDsFf6iBGuf6"
-                 target="_blank"
-                 class="flex items-center justify-center gap-1.5 ltr:sm:justify-start rtl:sm:justify-end"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="size-5 shrink-0 text-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <address class="-mt-0.5 flex-1 not-italic text-gray-200">
-                  Avenida Alda, Nº 48, sala 26, Centro, Diadema, Brasil
-                </address>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+        </ul>  
+    </div>
     </div>
 
     <div class="mt-12 border-t border-gray-100 pt-12">
