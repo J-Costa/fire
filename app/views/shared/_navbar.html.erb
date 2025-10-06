@@ -1,4 +1,4 @@
-  <nav x-data="{ loginMenuOpen: false, profileMenuOpen: false, mobileMenuOpen: false }" class="bg-gradient-to-r from-red-700 via-red-500 to-orange-700">
+<nav data-controller="navbar" class="bg-gradient-to-r from-red-700 via-red-500 to-orange-700">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 justify-between">
       <div class="flex">
@@ -19,7 +19,7 @@
           <!-- Profile dropdown -->
           <div class="relative ml-3">
             <div>
-              <button @click.outside="profileMenuOpen = false" @click="profileMenuOpen = !profileMenuOpen" type="button" class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+              <button data-action="click->navbar#toggleProfileMenu" type="button" class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
                 <div class="h-8 w-8 rounded-full flex items-center justify-center">
@@ -37,7 +37,7 @@
                 From: "transform opacity-100 scale-100"
                 To: "transform opacity-0 scale-95"
             -->
-            <div :class="profileMenuOpen ? '' : 'hidden'" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+            <div data-navbar-target="profileMenu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transform" role="menu" aria-labelledby="user-menu-button" tabindex="-1">
               <!-- Active: "bg-gray-100", Not Active: "" -->
               <%= link_to "Candidaturas", admin_enrollments_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" %>
               <%= link_to "Gerenciar cursos", admin_courses_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" %>
@@ -56,7 +56,7 @@
           <!-- Profile dropdown -->
           <div class="relative ml-3">
             <div>
-              <button @click.outside="loginMenuOpen = false" @click="loginMenuOpen = !loginMenuOpen" type="button" class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+              <button data-action="click->navbar#toggleLoginMenu" type="button" class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-haspopup="true" aria-expanded="false">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
                 <div class="h-8 w-8 rounded-full flex items-center justify-center">
@@ -76,7 +76,7 @@
                 From: "transform opacity-100 scale-100"
                 To: "transform opacity-0 scale-95"
             -->
-            <div :class="loginMenuOpen ? '' : 'hidden'" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+            <div data-navbar-target="loginMenu" class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transform" role="menu" tabindex="-1">
               <!-- Active: "bg-gray-100", Not Active: "" -->
               <%= link_to new_admin_session_path, class: "flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" do %>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
@@ -92,7 +92,7 @@
       <% end %>
       <div class="-mr-2 flex items-center sm:hidden">
         <!-- Mobile menu button -->
-        <button @click.outside="mobileMenuOpen = false" @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-red-400 hover:bg-red-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-inset bg-red-100 focus:ring-red-500" aria-controls="mobile-menu" aria-expanded="false">
+        <button data-action="click->navbar#toggleMobileMenu" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-red-400 hover:bg-red-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-inset bg-red-100 focus:ring-red-500" aria-controls="mobile-menu" aria-expanded="false">
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open main menu</span>
           <!--
@@ -100,7 +100,7 @@
 
             Menu open: "hidden", Menu closed: "block"
           -->
-          <svg :class="mobileMenuOpen ? 'hidden' : 'block'" class=" h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+          <svg data-navbar-target="mobileOpenIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
           <!--
@@ -108,7 +108,7 @@
 
             Menu open: "block", Menu closed: "hidden"
           -->
-          <svg :class="mobileMenuOpen ? 'block' : 'hidden'" class=" h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+          <svg data-navbar-target="mobileCloseIcon" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>
         </button>
@@ -116,12 +116,12 @@
     </div>
   </div>
   <!-- Mobile menu, show/hide based on menu state. -->
-  <div :class="mobileMenuOpen ? '' : 'hidden'" class="sm:hidden" id="mobile-menu">
+  <div data-navbar-target="mobileMenu" class="hidden sm:hidden transform" id="mobile-menu">
     <div class="space-y-1 pb-3 pt-2">
       <!-- Current: "bg-yellow-50 border-yellow-500 text-red-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
-      <%= link_to "Home", root_path, class: "#{current_page?("/") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
-      <%= link_to "Cursos", courses_path, class: "#{current_page?("/courses") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
-      <%= link_to "Contato", new_contact_path, class: "#{current_page?("/contacts/new") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+      <%= link_to "Home", root_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+      <%= link_to "Cursos", courses_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/courses') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+      <%= link_to "Contato", new_contact_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/contacts/new') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
     </div>
     <% if current_admin %> <%# || current_student TODO: Criar metodo para current_user e ter menu diferentes para admin e student %>
       <div class="border-t border-gray-200 pb-3 pt-4">
@@ -142,10 +142,10 @@
         </button> %>
         </div>
         <div class="mt-3 space-y-1">
-          <%= link_to "Candidaturas", admin_enrollments_path, class: "#{current_page?("/admin/enrollments") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
-          <%= link_to "Gerenciar cursos", admin_courses_path, class: "#{current_page?("/admin/courses") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
-          <%= link_to "Gerenciar alunos", admin_students_path, class: "#{current_page?("/admin/students") ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
-          <%= link_to destroy_admin_session_path, data: { "turbo-method": :delete }, class: "flex px-4 py-2 text-base font-medium text-gray-200 hover:bg-gray-100 hover:text-gray-800" do %>
+          <%= link_to "Candidaturas", admin_enrollments_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/admin/enrollments') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+          <%= link_to "Gerenciar cursos", admin_courses_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/admin/courses') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+          <%= link_to "Gerenciar alunos", admin_students_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/admin/students') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+          <%= link_to destroy_admin_session_path, data: { action: "click->navbar#closeMobileMenu", "turbo-method": :delete }, class: "flex px-4 py-2 text-base font-medium text-gray-200 hover:bg-gray-100 hover:text-gray-800" do %>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
             </svg>
@@ -156,7 +156,7 @@
     <% else %>
       <div class="border-t border-gray-200 pb-3 pt-4">
         <div class="items-center">
-          <%= link_to new_admin_session_path, class: "flex px-4 py-2 text-base font-medium text-gray-200 hover:bg-gray-100 hover:text-gray-800" do %>
+          <%= link_to new_admin_session_path, data: { action: "click->navbar#closeMobileMenu" }, class: "flex px-4 py-2 text-base font-medium text-gray-200 hover:bg-gray-100 hover:text-gray-800" do %>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
             </svg>
