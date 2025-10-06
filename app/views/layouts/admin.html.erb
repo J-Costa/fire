@@ -14,7 +14,6 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
 
   <body>
@@ -23,12 +22,14 @@
       <%= render "shared/alerts" %>
       <%= yield %>
     </main>
+    <!--
     <div vw class="enabled">
       <div vw-access-button class="active"></div>
         <div vw-plugin-wrapper>
           <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
+    -->
     <!--
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
