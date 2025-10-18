@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
 
-  enum :kind, { admin: "admin", student: "student" }
+  enum :kind, { admin: 'admin', student: 'student' }
 end

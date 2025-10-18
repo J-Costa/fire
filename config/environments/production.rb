@@ -1,4 +1,4 @@
-require "active_support/core_ext/integer/time"
+require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -40,7 +40,7 @@ Rails.application.configure do
   config.active_storage.service = :amazon
 
   # Set the default host for URL generation in production
-  config.action_controller.default_url_options = { host: "https://www.kryptontreinamentos.com.br" }
+  config.action_controller.default_url_options = { host: 'https://www.kryptontreinamentos.com.br' }
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -68,7 +68,7 @@ Rails.application.configure do
   # "info" includes generic and useful information about system operation, but avoids logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  config.log_level = ENV.fetch('RAILS_LOG_LEVEL', 'info')
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -81,16 +81,16 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
   config.action_mailer.smtp_settings = {
-    address:              "in-v3.mailjet.com",
+    address:              'in-v3.mailjet.com',
     port:                 587,
-    domain:               "kryptontreinamentos.com.br",
-    user_name:            ENV["MAILJET_API_KEY"],
-    password:             ENV["MAILJET_SECRET_KEY"],
-    authentication:       "plain",
+    domain:               'kryptontreinamentos.com.br',
+    user_name:            ENV['MAILJET_API_KEY'],
+    password:             ENV['MAILJET_SECRET_KEY'],
+    authentication:       'plain',
     enable_starttls_auto: true
   }
-  config.action_mailer.default_url_options = { host: "www.kryptontreinamentos.com.br" }
-  config.action_mailer.asset_host = "https://www.kryptontreinamentos.com.br"
+  config.action_mailer.default_url_options = { host: 'www.kryptontreinamentos.com.br' }
+  config.action_mailer.asset_host = 'https://www.kryptontreinamentos.com.br'
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
