@@ -31,4 +31,6 @@ Rails.application.routes.draw do
 
   resources :contacts, only: %i[new create]
   resources :courses, only: %i[show index]
+
+  post 'cookies/accept', to: 'cookies#accept'
 end
