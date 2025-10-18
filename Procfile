@@ -1,2 +1,2 @@
-release: bundle exec rails db:migrate && bundle exec rails assets:precompile
+release: bundle exec rails db:migrate
 web: bundle exec rails server
