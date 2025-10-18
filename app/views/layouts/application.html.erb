@@ -20,9 +20,10 @@
     </div>
     <main class="min-h-screen bg-gray-50">
       <%= yield %>
+      <div>
+        <%= render "shared/footer" %>
+      </div>
+      <%= render "shared/cookies" unless cookies_accepted? %>
     </main>
-    <div>
-      <%= render "shared/footer" %>
-    </div>
   </body>
 </html>

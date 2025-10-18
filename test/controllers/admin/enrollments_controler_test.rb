@@ -1,11 +1,11 @@
-require "test_helper"
+require 'test_helper'
 
 class Admin::EnrollmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:admin_one), scope: :admin
   end
 
-  test "should get index" do
+  test 'should get index' do
     get admin_enrollments_path
 
     assert_response :success

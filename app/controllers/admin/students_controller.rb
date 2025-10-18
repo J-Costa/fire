@@ -11,7 +11,7 @@ class Admin::StudentsController < Admin::BaseController
 
   def update
     if @student.update(student_params)
-      redirect_to admin_student_path(@student), notice: "Aluno atualizado com sucesso."
+      redirect_to admin_student_path(@student), notice: 'Aluno atualizado com sucesso.'
     else
       render :edit
     end

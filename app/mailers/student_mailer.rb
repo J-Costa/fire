@@ -1,5 +1,5 @@
 class StudentMailer < ApplicationMailer
-  layout "mailer"
+  layout 'mailer'
   default reply_to: nil
 
   def enrollment_email
@@ -7,6 +7,6 @@ class StudentMailer < ApplicationMailer
     @courses = params[:courses]
 
     mail(to: email_address_with_name(@student.email, @student.name),
-         subject: "Confirmação de Inscrição")
+         subject: 'Confirmação de Inscrição')
   end
 end

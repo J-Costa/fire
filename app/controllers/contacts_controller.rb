@@ -2,7 +2,7 @@ class ContactsController < ApplicationController
   before_action :prepare_contact, only: [:new, :create]
 
   def new
-    @email = params["email"]
+    @email = params['email']
   end
 
   def create
@@ -10,7 +10,7 @@ class ContactsController < ApplicationController
       @student = Student.new(student_params)
       @student.skip_confirmation!
       if course_params.blank?
-        flash.now[:alert] = "Selecione ao menos um curso"
+        flash.now[:alert] = 'Selecione ao menos um curso'
         return render :new, status: :unprocessable_content
       end
 
@@ -23,7 +23,7 @@ class ContactsController < ApplicationController
                      .enrollment_email
                      .deliver_later
         NewEnrollmentMailer.notify_admins.deliver_later
-        redirect_to root_path, notice: "Salvamos seu contato, assim que possível entraremos em contato."
+        redirect_to root_path, notice: 'Salvamos seu contato, assim que possível entraremos em contato.'
       else
         flash.now[:alert] = @student.errors.full_messages.to_sentence
         @selected_course_ids = course_params
