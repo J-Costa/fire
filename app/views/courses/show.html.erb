@@ -31,15 +31,32 @@
 
     <div class="mx-auto mt-4 max-w-xl">
       <%= form_with url: new_contact_path, method: :get, local: true, class: "sm:flex sm:gap-4" do |form| %>
-        <div class="sm:flex-1">
-          <%= form.label :email, "Email", class: "sr-only" %>
-          <%= form.email_field :email, placeholder: "Email", class: "w-full rounded-md border-gray-200 bg-white p-3 text-gray-700 shadow-xs transition focus:border-white focus:ring-3 focus:ring-red-400 focus:outline-hidden" %>
+       <div class="sm:flex-1">
+          <div class="relative">
+            <%= form.email_field :email,
+                  id: "contact_email",
+                  class: "peer w-full rounded-md border-gray-200 bg-white p-3 text-gray-700 shadow-xs transition focus:border-white focus:ring-3 focus:ring-red-400 focus:outline-hidden placeholder-transparent",
+                  placeholder: "Email" %>
+            <%= label :email, "Email", for: "contact_email",
+                  class: "pointer-events-none absolute left-3 top-3 bg-white px-1 text-sm text-gray-600 transition-all
+                          peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm
+                          peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-xs
+                          peer-focus:-top-2 peer-focus:text-xs peer-focus:text-red-600" %>
+          </div>
         </div>
         <%= form.hidden_field :course_id, value: @course.id %>
-        <%= form.submit "Inscreva-se", class: "group mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-red-600 px-5 py-3 text-white transition focus:ring-3 focus:ring-red-400 focus:outline-hidden sm:mt-0 sm:w-auto hover:cursor-pointer" do %>
-          <svg class="size-5 shadow-sm rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+        <%= button_tag type: :submit,
+              class: "group relative inline-flex items-center overflow-hidden rounded-md border border-current px-8 py-3 text-red-600 transition
+                      hover:bg-red-500 hover:text-white
+                      focus:bg-red-500 focus:text-white
+                      focus-visible:outline-none focus:outline-none
+                      focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2" do %>
+          <span class="absolute -start-full transition-all group-hover:start-4 group-focus:start-4">
+            <svg class="size-5 shadow-sm rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </span>
+          <span class="text-sm font-medium transition-all group-hover:ms-4 group-focus:ms-4">Inscreva-se</span>
         <% end %>
       <% end %>
     </div>
