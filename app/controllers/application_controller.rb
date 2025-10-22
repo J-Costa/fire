@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
     request.path == '/health_check' ||
     request.path.start_with?('rails/active_storage') ||
     request.path.include?('manifest.json') ||
-    params[:skip_ahoy].present? ||
-    !cookies_accepted?
+    params[:skip_ahoy].present?
   end
 end
