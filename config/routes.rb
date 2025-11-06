@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount RailsPulse::Engine => '/admins/monitoring', as: 'rails_pulse'
+
   default_url_options host: ENV.fetch('HOST', 'localhost:3000')
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

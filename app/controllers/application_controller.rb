@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   def skip_ahoy?
     request.path == '/health_check' ||
-    request.path.start_with?('rails/active_storage') ||
+    request.path.start_with?('/rails/active_storage') ||
     request.path.include?('manifest.json') ||
     params[:skip_ahoy].present?
   end
