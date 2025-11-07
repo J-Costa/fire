@@ -11,7 +11,10 @@ admin_one:
 
 student_one:
   name: student
+  phone: 11912345678
   email: student@student.com
   password:
   kind: student
   document:
+  contacted: false
+  enrolled: false
