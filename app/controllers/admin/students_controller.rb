@@ -11,9 +11,10 @@ class Admin::StudentsController < Admin::BaseController
 
   def update
     if @student.update(student_params)
-      redirect_to admin_student_path(@student), notice: 'Aluno atualizado com sucesso.'
+      redirect_to admin_students_path, notice: 'Aluno atualizado com sucesso.'
     else
-      render :edit
+      flash.now.alert = @student.errors.full_messages.to_sentence
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -24,6 +25,6 @@ class Admin::StudentsController < Admin::BaseController
   end
 
   def student_params
-    params.require(:student).permit(:name, :email, :phone, :contacted)
+    params.require(:student).permit(:name, :email, :phone, :contacted, :enrolled)
   end
 end
