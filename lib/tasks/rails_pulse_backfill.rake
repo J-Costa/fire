@@ -15,6 +15,7 @@ namespace :rails_pulse do
         end
 
         # Try common backfill job names in the RailsPulse ecosystem
+        puts "[RailsPulse] Starting backfill from #{from_date} to #{to_date}"
         RailsPulse::BackfillSummariesJob.perform_now(from_date, to_date)
         puts "[RailsPulse] Backfill completed from #{from_date} to #{to_date}"
       rescue => e
