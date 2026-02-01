@@ -1,6 +1,6 @@
 namespace :rails_pulse do
   namespace :backfill do
-    desc "Backfill Rails Pulse summaries from latest daily period to today"
+    desc 'Backfill Rails Pulse summaries from latest daily period to today'
     task to_today: :environment do
       begin
         # Find the latest daily summary period_start
