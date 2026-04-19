@@ -56,7 +56,7 @@ RailsPulse.configure do |config|
   # Rails Pulse from tracking its own requests. Leave as nil for default '/rails_pulse'.
   # Examples:
   #   config.mount_path = "/admin/monitoring"
-  config.mount_path = nil
+  config.mount_path = '/admins/monitoring'
 
   # Manual route filtering
   # Specify additional routes, requests, or queries to ignore from performance tracking.
@@ -67,7 +67,7 @@ RailsPulse.configure do |config|
   #   config.ignored_requests = ["GET /status", %r{POST /api/v1/.*}]
   #   config.ignored_queries  = ["SELECT 1", %r{FROM \"schema_migrations\"}]
 
-  config.ignored_routes   = []
+  config.ignored_routes   = ['/manifest.json']
   config.ignored_requests = []
   config.ignored_queries  = []
 
@@ -90,38 +90,7 @@ RailsPulse.configure do |config|
   # Example configuration:
   #   config.tags = ["ignored", "critical", "experimental", "deprecated", "external", "admin"]
 
-  config.tags = [ "ignored", "critical", "experimental" ]
-
-  # ====================================================================================================
-  #                                            BACKGROUND JOBS
-  # ====================================================================================================
-  # Configure background job monitoring and tracking.
-  # When enabled, Rails Pulse will track job executions, durations, failures, and retries.
-  # Supports ActiveJob, Sidekiq, and Delayed Job.
-
-  # Enable or disable background job tracking
-  config.track_jobs = true
-
-  # Thresholds for job execution times (in milliseconds)
-  config.job_thresholds = {
-    slow:      5_000,   # 5 seconds
-    very_slow: 30_000,  # 30 seconds
-    critical:  60_000   # 1 minute
-  }
-
-  # Job classes to ignore from tracking (by class name)
-  # Examples:
-  #   config.ignored_jobs = ["ActionMailer::MailDeliveryJob", "MyApp::HealthCheckJob"]
-  config.ignored_jobs = []
-
-  # Queue names to ignore from tracking
-  # Examples:
-  #   config.ignored_queues = ["low_priority", "mailers"]
-  config.ignored_queues = []
-
-  # Capture job arguments for debugging (may contain sensitive data)
-  # Set to false in production to avoid storing potentially sensitive information
-  config.capture_job_arguments = true
+  config.tags = [ 'ignored', 'critical', 'experimental' ]
 
   # ====================================================================================================
   #                                            DATABASE CONFIGURATION
@@ -167,19 +136,19 @@ RailsPulse.configure do |config|
   # Uncomment and configure one of the following patterns based on your authentication system:
 
   # Enable/disable authentication (enabled by default in production)
-  # config.authentication_enabled = Rails.env.production?
+  config.authentication_enabled = Rails.env.production? || Rails.env.development?
 
   # Where to redirect unauthorized users
-  # config.authentication_redirect_path = "/"
+  config.authentication_redirect_path = '/admins/sign_in'
 
   # Custom authentication method - choose one of the examples below:
 
   # Example 1: Devise with admin role check
-  # config.authentication_method = proc {
-  #   unless user_signed_in? && current_user.admin?
-  #     redirect_to main_app.root_path, alert: "Access denied"
-  #   end
-  # }
+  config.authentication_method = proc {
+    unless current_admin
+      redirect_to config.authentication_redirect_path, alert: 'Access denied'
+    end
+  }
 
   # Example 2: Custom session-based authentication
   # config.authentication_method = proc {
