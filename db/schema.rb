@@ -107,6 +107,45 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_07_210744) do
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
+  create_table "rails_pulse_job_runs", force: :cascade do |t|
+    t.string "adapter", comment: "Queue adapter"
+    t.text "arguments", comment: "Serialized arguments"
+    t.integer "attempts", default: 0, null: false, comment: "Retry attempts"
+    t.datetime "created_at", null: false
+    t.decimal "duration", precision: 15, scale: 6, comment: "Execution duration in milliseconds"
+    t.datetime "enqueued_at", precision: nil, comment: "When the job was enqueued"
+    t.string "error_class", comment: "Error class name"
+    t.text "error_message", comment: "Error message"
+    t.bigint "job_id", null: false, comment: "Link to job definition"
+    t.datetime "occurred_at", precision: nil, null: false, comment: "When the job started"
+    t.string "run_id", null: false, comment: "Adapter specific run id"
+    t.string "status", null: false, comment: "Execution status"
+    t.text "tags", comment: "Execution tags"
+    t.datetime "updated_at", null: false
+    t.index ["job_id", "occurred_at"], name: "index_rails_pulse_job_runs_on_job_and_occurred"
+    t.index ["job_id", "status"], name: "index_rails_pulse_job_runs_on_job_and_status"
+    t.index ["job_id"], name: "index_rails_pulse_job_runs_on_job_id"
+    t.index ["occurred_at"], name: "index_rails_pulse_job_runs_on_occurred_at"
+    t.index ["run_id"], name: "index_rails_pulse_job_runs_on_run_id", unique: true
+    t.index ["status"], name: "index_rails_pulse_job_runs_on_status"
+  end
+
+  create_table "rails_pulse_jobs", force: :cascade do |t|
+    t.decimal "avg_duration", precision: 15, scale: 6, comment: "Average duration in milliseconds"
+    t.datetime "created_at", null: false
+    t.text "description", comment: "Optional description"
+    t.integer "failures_count", default: 0, null: false, comment: "Cache of failed runs"
+    t.string "name", null: false, comment: "Job class name"
+    t.string "queue_name", comment: "Default queue"
+    t.integer "retries_count", default: 0, null: false, comment: "Cache of retried runs"
+    t.integer "runs_count", default: 0, null: false, comment: "Cache of total runs"
+    t.text "tags", comment: "JSON array of tags"
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_rails_pulse_jobs_on_name", unique: true
+    t.index ["queue_name"], name: "index_rails_pulse_jobs_on_queue"
+    t.index ["runs_count"], name: "index_rails_pulse_jobs_on_runs_count"
+  end
+
   create_table "rails_pulse_operations", force: :cascade do |t|
     t.string "codebase_location", comment: "File and line number (e.g., app/models/user.rb:25)"
     t.datetime "created_at", null: false
@@ -238,6 +277,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_07_210744) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "users"
+  add_foreign_key "rails_pulse_job_runs", "rails_pulse_jobs", column: "job_id"
   add_foreign_key "rails_pulse_operations", "rails_pulse_queries", column: "query_id"
   add_foreign_key "rails_pulse_operations", "rails_pulse_requests", column: "request_id"
   add_foreign_key "rails_pulse_requests", "rails_pulse_routes", column: "route_id"
