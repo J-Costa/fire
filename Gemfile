@@ -28,7 +28,7 @@ gem 'geocoder'
 gem 'maxminddb'
 gem 'barnes'
 gem 'requestjs-rails'
-gem 'rails_pulse', '0.2.7'
+gem 'rails_pulse', '0.3.1'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
