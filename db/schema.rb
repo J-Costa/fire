@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_20_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_07_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -107,6 +107,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_20_000001) do
     t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
+  create_table "rails_pulse_deployments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "finished_at", comment: "When the deployment finished (nil if still in progress or unknown)"
+    t.text "metadata", comment: "JSON object of arbitrary deployment metadata"
+    t.string "revision", null: false, comment: "Git SHA, tag, or version string"
+    t.datetime "started_at", null: false, comment: "When the deployment started"
+    t.datetime "updated_at", null: false
+    t.index ["revision"], name: "index_rails_pulse_deployments_on_revision"
+    t.index ["started_at"], name: "index_rails_pulse_deployments_on_started_at"
+  end
+
   create_table "rails_pulse_job_runs", force: :cascade do |t|
     t.string "adapter", comment: "Queue adapter"
     t.text "arguments", comment: "Serialized arguments"
@@ -149,6 +160,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_20_000001) do
   end
 
   create_table "rails_pulse_operations", force: :cascade do |t|
+    t.text "actual_sql", comment: "Actual SQL that ran for sql operations — comment-stripped, unparameterized, unbounded"
     t.boolean "cache_hit", default: false, null: false
     t.string "codebase_location", comment: "File and line number (e.g., app/models/user.rb:25)"
     t.datetime "created_at", null: false
