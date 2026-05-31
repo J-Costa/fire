@@ -100,7 +100,7 @@ RailsPulse.configure do |config|
   # Supports ActiveJob, Sidekiq, and Delayed Job.
 
   # Enable or disable background job tracking
-  config.track_jobs = true
+  config.track_jobs = false
 
   # Thresholds for job execution times (in milliseconds)
   config.job_thresholds = {
