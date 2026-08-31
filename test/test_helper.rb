@@ -3,15 +3,15 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   enable_coverage :branch
   filters.clear
-  add_filter '/test/'
-  add_filter '/config/'
-  add_filter '/vendor/'
+  skip '/test/'
+  skip '/config/'
+  skip '/vendor/'
 
   groups.clear
-  add_group 'Models', 'app/models'
-  add_group 'Controllers', 'app/controllers'
+  group 'Models', 'app/models'
+  group 'Controllers', 'app/controllers'
 
-  track_files 'app/**/*.rb'
+  cover 'app/**/*.rb'
 
   # merge_timeout 3600
 end
