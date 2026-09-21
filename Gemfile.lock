@@ -82,7 +82,7 @@ GEM
       cgi
       device_detector (>= 1)
       safely_block (>= 0.4)
-    amazing_print (2.0.0)
+    amazing_print (3.0.0)
     ast (2.4.3)
     async (2.39.0)
       console (~> 1.29)
