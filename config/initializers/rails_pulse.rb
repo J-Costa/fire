@@ -247,7 +247,7 @@ RailsPulse.configure do |config|
   # ====================================================================================================
   # New settings from this gem version. Existing values above were not changed.
   # Review with git diff and keep or discard hunks as you like.
-  
+
 
   # Tracking writes happen on a background thread by default (see `config.async`
   # under ADVANCED). Transactional tests share one database connection across
