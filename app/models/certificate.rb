@@ -7,6 +7,7 @@ class Certificate < ApplicationRecord
 
   validates :code, presence: true, uniqueness: true
   validates :expires_at, :issued_at, presence: true
+  validates :status, presence: true
 
   before_validation :generate_unique_code, on: :create
   before_validation :set_expires_at_and_issued_at, on: :create
