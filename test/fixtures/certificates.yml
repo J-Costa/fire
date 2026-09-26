@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+active:
+  code: SecureRandom.alphanumeric(8)
+  enrollment: one
+  issued_at: Time.current
+  expires_at: 1.year.from_now
+  status: active
+
+expired:
+  code: SecureRandom.alphanumeric(8)
+  enrollment: two
+  issued_at: 1.year.ago - 2.days
+  expires_at: 1.day.ago
+  status: expired
+
+revoked:
+  code: SecureRandom.alphanumeric(8)
+  enrollment: three
+  issued_at: 1.year.ago - 2.days
+  expires_at: 1.day.ago
+  status: revoked
