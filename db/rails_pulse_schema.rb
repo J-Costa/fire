@@ -2,10 +2,12 @@
 # This file contains the complete schema for Rails Pulse tables
 # Load with: rails db:schema:load_rails_pulse or db:prepare
 
+require "rails_pulse/route_indexes" unless defined?(RailsPulse::RouteIndexes)
+
 RailsPulse::Schema = lambda do |connection|
   adapter = connection.adapter_name.downcase
   # Skip if all tables already exist to prevent conflicts
-  required_tables = [ :rails_pulse_routes, :rails_pulse_queries, :rails_pulse_requests, :rails_pulse_operations, :rails_pulse_jobs, :rails_pulse_job_runs, :rails_pulse_summaries ]
+  required_tables = [ :rails_pulse_routes, :rails_pulse_queries, :rails_pulse_requests, :rails_pulse_operations, :rails_pulse_jobs, :rails_pulse_job_runs, :rails_pulse_summaries, :rails_pulse_deployments, :rails_pulse_exception_groups, :rails_pulse_exception_occurrences ]
 
   # Check which tables already exist
   existing_tables = required_tables.select { |table| connection.table_exists?(table) }
@@ -28,20 +30,23 @@ RailsPulse::Schema = lambda do |connection|
 
   unless connection.table_exists?(:rails_pulse_routes)
     connection.create_table :rails_pulse_routes do |t|
-      t.string :method, null: false, comment: "HTTP method (e.g., GET, POST)"
-      t.string :path, null: false, comment: "Request path (e.g., /posts/index)"
+      t.text :http_methods, null: false, comment: "JSON array of HTTP methods accepted by this route (e.g., [\"GET\",\"POST\"])"
+      t.string :path, null: false, comment: "Normalized request path (e.g., /posts/:id)"
       t.text :tags, comment: "JSON array of tags for filtering and categorization"
+      t.string :controller_action, comment: "Rails controller and action handling this route (e.g., articles#show)"
       t.timestamps
     end
 
-    connection.add_index :rails_pulse_routes, [ :method, :path ], unique: true, name: "index_rails_pulse_routes_on_method_and_path"
+    connection.add_index :rails_pulse_routes, [ :controller_action, :path ], unique: true, name: "index_rails_pulse_routes_on_controller_action_and_path"
     connection.add_index :rails_pulse_routes, :path, name: "index_rails_pulse_routes_on_path"
+    # Groups 404s / unrecognized paths by path. Partial (PG/SQLite) or functional (MySQL).
+    RailsPulse::RouteIndexes.ensure_null_action_uniqueness!(connection)
   end
 
   unless connection.table_exists?(:rails_pulse_queries)
     connection.create_table :rails_pulse_queries do |t|
-      t.string :hashed_sql, limit: 32, null: false, comment: "MD5 hash of normalized SQL for indexing"
-      t.text :normalized_sql, null: false, comment: "Normalized SQL query string (e.g., SELECT * FROM users WHERE id = ?)"
+      t.string :hashed_sql, limit: 32, null: false, comment: "MD5 hash of normalized SQL for fast lookups and uniqueness"
+      t.text :normalized_sql, null: false, comment: "Full normalized SQL query string (e.g., SELECT * FROM users WHERE id = ?)"
       t.datetime :analyzed_at, comment: "When query analysis was last performed"
       t.text :explain_plan, comment: "EXPLAIN output from actual SQL execution"
       t.text :issues, comment: "JSON array of detected performance issues"
@@ -61,6 +66,7 @@ RailsPulse::Schema = lambda do |connection|
   unless connection.table_exists?(:rails_pulse_requests)
     connection.create_table :rails_pulse_requests do |t|
       t.references :route, null: false, foreign_key: { to_table: :rails_pulse_routes }, comment: "Link to the route"
+      t.string :method, comment: "HTTP method used for this request (e.g., GET, POST)"
       t.decimal :duration, precision: 15, scale: 6, null: false, comment: "Total request duration in milliseconds"
       t.integer :status, null: false, comment: "HTTP status code (e.g., 200, 500)"
       t.boolean :is_error, null: false, default: false, comment: "True if status >= 500"
@@ -68,6 +74,7 @@ RailsPulse::Schema = lambda do |connection|
       t.string :controller_action, comment: "Controller and action handling the request (e.g., PostsController#show)"
       t.timestamp :occurred_at, null: false, comment: "When the request started"
       t.text :tags, comment: "JSON array of tags for filtering and categorization"
+      t.integer :response_size_bytes, comment: "HTTP response body size in bytes"
       t.timestamps
     end
 
@@ -85,6 +92,8 @@ RailsPulse::Schema = lambda do |connection|
       t.integer :failures_count, null: false, default: 0, comment: "Cache of failed runs"
       t.integer :retries_count, null: false, default: 0, comment: "Cache of retried runs"
       t.decimal :avg_duration, precision: 15, scale: 6, comment: "Average duration in milliseconds"
+      t.decimal :p95_duration, precision: 15, scale: 6, comment: "95th percentile duration in milliseconds"
+      t.decimal :p99_duration, precision: 15, scale: 6, comment: "99th percentile duration in milliseconds"
       t.text :tags, comment: "JSON array of tags"
       t.timestamps
     end
@@ -124,11 +133,16 @@ RailsPulse::Schema = lambda do |connection|
       t.references :job_run, null: true, foreign_key: { to_table: :rails_pulse_job_runs }, comment: "Link to a background job execution"
       t.references :query, foreign_key: { to_table: :rails_pulse_queries }, index: false, comment: "Link to the normalized SQL query"
       t.string :operation_type, null: false, comment: "Type of operation (e.g., database, view, gem_call)"
-      t.string :label, null: false, comment: "Descriptive name (e.g., SELECT FROM users WHERE id = 1, render layout)"
+      t.string :label, null: false, comment: "Display label: normalized SQL (≤255) for sql ops, controller#action / render path / cache key etc. for others"
       t.decimal :duration, precision: 15, scale: 6, null: false, comment: "Operation duration in milliseconds"
       t.string :codebase_location, comment: "File and line number (e.g., app/models/user.rb:25)"
       t.float :start_time, null: false, default: 0.0, comment: "Operation start time in milliseconds"
       t.timestamp :occurred_at, null: false, comment: "When the request started"
+      t.integer :row_count, comment: "Number of rows returned (SQL operations, Rails 7.1+)"
+      t.boolean :cache_hit, comment: "Whether a cache_read operation hit the cache"
+      t.text :actual_sql, comment: "Actual SQL that ran for sql operations — comment-stripped, unparameterized, unbounded"
+      t.text :repeated_query_group, comment: "Normalized SQL key identifying an N+1 group"
+      t.integer :repetition_count, comment: "Number of times this query pattern repeated in the request"
       t.timestamps
     end
 
@@ -152,7 +166,7 @@ RailsPulse::Schema = lambda do |connection|
       t.string :period_type, null: false, comment: "Aggregation period type: hour, day, week, month"
 
       # Polymorphic association to handle both routes and queries
-      t.references :summarizable, polymorphic: true, null: false, index: false, comment: "Link to Route or Query"
+      t.references :summarizable, polymorphic: true, null: false, index: true, comment: "Link to Route or Query"
       # This creates summarizable_type (e.g., 'RailsPulse::Route', 'RailsPulse::Query')
       # and summarizable_id (route_id or query_id)
 
@@ -188,6 +202,63 @@ RailsPulse::Schema = lambda do |connection|
     connection.add_index :rails_pulse_summaries, :period_start, name: "index_rails_pulse_summaries_on_period_start"
   end
 
+  unless connection.table_exists?(:rails_pulse_deployments)
+    connection.create_table :rails_pulse_deployments do |t|
+      t.string   :revision,    null: false, comment: "Git SHA, tag, or version string"
+      t.datetime :started_at,  null: false, comment: "When the deployment started"
+      t.datetime :finished_at,             comment: "When the deployment finished (nil if still in progress or unknown)"
+      t.text     :metadata,                comment: "JSON object of arbitrary deployment metadata"
+      t.timestamps
+    end
+
+    connection.add_index :rails_pulse_deployments, :started_at,
+      name: "index_rails_pulse_deployments_on_started_at"
+    connection.add_index :rails_pulse_deployments, :revision,
+      name: "index_rails_pulse_deployments_on_revision"
+  end
+
+  unless connection.table_exists?(:rails_pulse_exception_groups)
+    connection.create_table :rails_pulse_exception_groups do |t|
+        t.string   :fingerprint,      null: false, comment: "SHA256 of exception_class + relative first app-code location"
+        t.string   :exception_class,  null: false, comment: "e.g. ActiveRecord::RecordNotFound"
+        t.string   :location,                      comment: "Relative first app-code frame, e.g. app/models/user.rb#save"
+        t.text     :message,                       comment: "Message from the most recent occurrence"
+        t.datetime :first_seen_at,    null: false
+        t.datetime :last_seen_at,     null: false
+        t.integer  :occurrence_count, null: false, default: 0
+        t.string   :status,           null: false, default: "open", comment: "open, resolved, ignored"
+        t.datetime :resolved_at,                   comment: "When the group was last resolved"
+        t.boolean  :preserve,         null: false, default: false, comment: "Exempt from all automatic cleanup including occurrence rows"
+      t.timestamps
+    end
+
+    connection.add_index :rails_pulse_exception_groups, :fingerprint,     unique: true, name: "index_rp_exception_groups_on_fingerprint"
+    connection.add_index :rails_pulse_exception_groups, :last_seen_at,                  name: "index_rp_exception_groups_on_last_seen_at"
+    connection.add_index :rails_pulse_exception_groups, :exception_class,               name: "index_rp_exception_groups_on_class"
+    connection.add_index :rails_pulse_exception_groups, :status,                        name: "index_rp_exception_groups_on_status"
+  end
+
+  unless connection.table_exists?(:rails_pulse_exception_occurrences)
+    connection.create_table :rails_pulse_exception_occurrences do |t|
+      t.references :exception_group, null: false, index: false,
+                   foreign_key: { to_table: :rails_pulse_exception_groups },
+                   comment: "FK to the group this occurrence belongs to"
+      t.string   :exception_class, null: false
+      t.text     :message
+        t.text     :backtrace,       comment: "JSON array of {file, line, method} frames (first 50)"
+      t.string   :request_url,     comment: "Nullable — web requests only"
+      t.string   :request_method,  comment: "GET, POST, etc."
+      t.string   :environment,     comment: "production, staging, etc."
+      t.string   :deploy_sha,       comment: "Captured now even though Pro uses it — cannot backfill later"
+      t.text     :request_params,   comment: "JSON hash of filtered request params — web requests only"
+      t.datetime :occurred_at,      null: false
+      t.timestamps
+    end
+
+    connection.add_index :rails_pulse_exception_occurrences, :occurred_at,        name: "index_rp_exception_occurrences_on_occurred_at"
+    connection.add_index :rails_pulse_exception_occurrences, :exception_group_id, name: "index_rp_exception_occurrences_on_group_id"
+  end
+
   # Add indexes to existing tables for efficient aggregation
   unless connection.index_exists?(:rails_pulse_requests, [ :created_at, :route_id ], name: "idx_requests_for_aggregation")
     connection.add_index :rails_pulse_requests, [ :created_at, :route_id ], name: "idx_requests_for_aggregation"
@@ -203,7 +274,7 @@ RailsPulse::Schema = lambda do |connection|
   if newly_created.any?
     puts "[RailsPulse::Schema] Successfully created tables: #{newly_created.join(', ')}"
   end
-end
+end unless defined?(RailsPulse::Schema)
 
 if defined?(RailsPulse::ApplicationRecord)
   RailsPulse::Schema.call(RailsPulse::ApplicationRecord.connection)
