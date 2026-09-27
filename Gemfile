@@ -73,3 +73,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
 end
+
+gem 'solid_cache', '~> 1.0'
