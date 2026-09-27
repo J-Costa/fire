@@ -22,6 +22,13 @@ class CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, 'Certificado válido'
   end
 
+  test 'should render not found for invalid certificate code from form' do
+    post certificates_url, params: { certificate: { code: 'INVALID01' } }
+
+    assert_response :not_found
+    assert_includes response.body, 'Certificado não encontrado'
+  end
+
   test 'should validate certificate through direct code link' do
     get certificate_url(@certificate.code)
 
@@ -29,6 +36,17 @@ class CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, @certificate.code
     assert_includes response.body, @certificate.course.name
     assert_includes response.body, @certificate.user.name
+  end
+
+  test 'should show active certificate as expired after its expiration date' do
+    expired_certificate = certificates(:active)
+    expired_certificate.update!(expires_at: 1.day.ago)
+
+    get certificate_url(expired_certificate.code)
+
+    assert_response :success
+    assert_includes response.body, 'Certificado expirado'
+    refute_includes response.body, 'Certificado válido'
   end
 
   test 'should return not found for an unknown code' do

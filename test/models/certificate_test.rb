@@ -12,7 +12,7 @@ class CertificateTest < ActiveSupport::TestCase
     enrollment = enrollments(:one)
     certificate = Certificate.create!(enrollment: enrollment, status: :active)
 
-    assert_match(/\A[A-Z0-9]{8}\z/, certificate.code)
+    assert_match(/\A[A-Z0-9]{6}\z/, certificate.code)
     assert_in_delta Time.current, certificate.issued_at, 1.second
     assert_in_delta 1.year.from_now, certificate.expires_at, 1.second
   end
@@ -71,7 +71,7 @@ class CertificateTest < ActiveSupport::TestCase
 
   test 'valid_certificate? should return false for active certificate past expiration' do
     certificate = certificates(:active)
-    certificate.expires_at = 1.minute.ago
+    certificate.expires_at = 1.day.ago
 
     assert_not certificate.valid_certificate?
   end
@@ -86,5 +86,30 @@ class CertificateTest < ActiveSupport::TestCase
     certificate = certificates(:revoked)
 
     assert_not certificate.valid_certificate?
+  end
+
+  test 'effective_status should return revoked for revoked certificate' do 
+    certificate = certificates(:revoked)
+
+    assert_equal :revoked, certificate.effective_status
+  end
+
+  test 'effective_status should return expired for expired certificate' do
+    certificate = certificates(:expired)
+
+    assert_equal :expired, certificate.effective_status
+  end
+
+  test 'effective_status should return expired for active certificate past expiration' do
+    certificate = certificates(:active)
+    certificate.expires_at = 1.day.ago
+
+    assert_equal :expired, certificate.effective_status
+  end
+
+  test 'effective_status should return active for active and not expired certificate' do
+    certificate = certificates(:active)
+
+    assert_equal :active, certificate.effective_status
   end
 end

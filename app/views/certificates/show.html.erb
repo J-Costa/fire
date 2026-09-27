@@ -3,17 +3,16 @@
 <section class="bg-gray-50 px-6 py-16 sm:px-10 lg:px-16">
   <div class="mx-auto max-w-xl rounded-lg bg-white p-8 shadow-sm ring-1 ring-gray-100 sm:p-12">
     <% if @certificate %>
-      <% valid = @certificate.valid_certificate? %>
       <% status_styles = {
         "active" => "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
         "expired" => "bg-amber-50 text-amber-700 ring-amber-600/20",
         "revoked" => "bg-red-50 text-red-700 ring-red-600/20"
       } %>
-      <% status_style = status_styles.fetch(@certificate.status, "bg-gray-50 text-gray-700 ring-gray-600/20") %>
+      <% status_style = status_styles.fetch(@certificate.effective_status.to_s, "bg-gray-50 text-gray-700 ring-gray-600/20") %>
 
       <div class="text-center">
         <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-inset <%= status_style %>">
-          <%= t("certificates.status.#{@certificate.status}") %>
+          <%= t("certificates.status.#{@certificate.effective_status}") %>
         </span>
         <h1 class="mt-5 text-3xl font-bold text-gray-900"><%= @certificate.user.name %></h1>
         <%= link_to @certificate.course.name, course_path(@certificate.course), class: "mt-2 inline-block text-lg font-medium text-red-600 hover:underline" %>
@@ -31,15 +30,17 @@
         </div>
         <div class="flex justify-between gap-4 py-4">
           <dt class="text-gray-600"><%= t("certificates.labels.status") %></dt>
-          <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-inset <%= status_style %>"><%= t("certificates.status.#{@certificate.status}") %></span>
+          <dd>
+            <span class="inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold ring-1 ring-inset <%= status_style %>"><%= t("certificates.status.#{@certificate.effective_status}") %></span>
+          </dd>
         </div>
         <div class="flex justify-between gap-4 py-4">
           <dt class="text-gray-600"><%= t("certificates.labels.issued_at") %></dt>
-          <dd class="font-medium text-gray-900"><%= l(@certificate.issued_at.to_date) %></dd>
+          <dd class="font-medium text-gray-900"><%= l(@certificate.issued_at.to_date, format: :long) %></dd>
         </div>
         <div class="flex justify-between gap-4 py-4">
           <dt class="text-gray-600"><%= t("certificates.labels.expires_at") %></dt>
-          <dd class="font-medium text-gray-900"><%= l(@certificate.expires_at.to_date) %></dd>
+          <dd class="font-medium text-gray-900"><%= l(@certificate.expires_at.to_date, format: :long) %></dd>
         </div>
       </dl>
 

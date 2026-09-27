@@ -14,13 +14,24 @@ class Certificate < ApplicationRecord
 
 
   def valid_certificate?
-    active? && expires_at.present? && expires_at > Time.current
+    active? && expires_at_in_future?
+  end
+
+  def effective_status
+    return :revoked if revoked?
+    return :expired unless expires_at_in_future?
+
+    :active
   end
 
   private
 
+  def expires_at_in_future?
+    expires_at.present? && expires_at.to_date >= Time.current.to_date
+  end
+
   def generate_unique_code
-    self.code ||= SecureRandom.alphanumeric(8).upcase
+    self.code ||= SecureRandom.alphanumeric(6).upcase
   end
 
   def set_expires_at_and_issued_at
