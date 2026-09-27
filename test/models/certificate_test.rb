@@ -88,7 +88,7 @@ class CertificateTest < ActiveSupport::TestCase
     assert_not certificate.valid_certificate?
   end
 
-  test 'effective_status should return revoked for revoked certificate' do 
+  test 'effective_status should return revoked for revoked certificate' do
     certificate = certificates(:revoked)
 
     assert_equal :revoked, certificate.effective_status
