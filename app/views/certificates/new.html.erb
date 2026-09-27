@@ -10,7 +10,7 @@
     <%= form_with url: certificates_path, scope: :certificate, method: :post, data: { turbo: false }, class: "mt-8 space-y-5" do |form| %>
       <div>
         <%= form.label :code, "Código do certificado", class: "block text-sm font-medium text-gray-700" %>
-        <%= form.text_field :code, required: true, autofocus: true, autocomplete: "off", class: "mt-2 w-full rounded-md border-gray-300 p-3 uppercase shadow-sm focus:border-red-500 focus:ring-red-500" %>
+        <%= form.text_field :code, required: true, autofocus: true, autocomplete: "off", class: "mt-2 w-full rounded-md border border-gray-300 p-3 uppercase shadow-sm focus:border-red-500 focus:ring-2 focus:ring-red-500" %>
       </div>
       <%= form.submit "Verificar certificado", class: "w-full rounded-md bg-red-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-red-700 focus:outline-hidden focus:ring-3 focus:ring-red-300" %>
     <% end %>
