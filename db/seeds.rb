@@ -8,15 +8,18 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-admin = Admin.create(name:    "admin",
-                     password: "123456",
-                     email:    "admin@admin.com")
-admin.confirm
+admin = Admin.find_or_create_by(name:    "admin",
+                                email:    "admin@admin.com")
+unless admin.persisted?
+  admin.password = "123456"
+  admin.save!
+  admin.confirm
+end
 
-Course.create(name:        "Bombeiro Civil",
-              description: "Curso de Bombeiro Civil",
-              details:     "Curso de Bombeiro Civil detalhado",
-              featured:    9)
+Course.find_or_create_by(name:        "Bombeiro Civil",
+                         description: "Curso de Bombeiro Civil",
+                         details:     "Curso de Bombeiro Civil detalhado",
+                         featured:    9)
 
 # Adicionar imagem custom para o curso. No app, caso nao exista uma salva ele usa uma default...
 # image_path = Rails.root.join('app', 'assets', 'images', 'default_course_image.jpg')
@@ -27,3 +30,14 @@ Course.create(name:        "Bombeiro Civil",
 # end
 
 # course.save!
+
+enrollment = Enrollment.first
+if enrollment
+  certificate = Certificate.find_or_initialize_by(enrollment: enrollment)
+  certificate.issued_at ||= Time.current
+  certificate.expires_at ||= 1.year.from_now
+  certificate.status ||= 'active'
+  certificate.save!
+else
+  puts "No enrollment found. Skipping certificate creation."
+end

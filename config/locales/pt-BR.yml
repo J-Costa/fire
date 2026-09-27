@@ -1,12 +1,25 @@
 ---
 pt-BR:
+  certificates:
+    status:
+      active: "Certificado válido"
+      expired: "Certificado expirado"
+      revoked: "Certificado revogado"
+    labels:
+      code: "Código"
+      student: "Aluno"
+      course: "Curso"
+      status: "Situação"
+      issued_at: "Emitido em"
+      expires_at: "Válido até"
+      about_course: "Sobre o curso"
+    actions:
+      view_course: "Ver curso"
+      validate_another: "Validar outro certificado"
+    not_found:
+      title: "Certificado não encontrado"
+      description: "Confira o código informado e tente novamente."
   activerecord:
-    errors:
-      messages:
-        record_invalid: 'A validação falhou: %{errors}'
-        restrict_dependent_destroy:
-          has_one: Não é possível excluir o registro pois existe um %{record} dependente
-          has_many: Não é possível excluir o registro pois existem %{record} dependentes
     models:
       course: "Curso"
     attributes:
@@ -16,6 +29,11 @@ pt-BR:
         featured: "Destaque"
         marketing: "Imagem de Marketing"
     errors:
+      messages:
+        record_invalid: 'A validação falhou: %{errors}'
+        restrict_dependent_destroy:
+          has_one: Não é possível excluir o registro pois existe um %{record} dependente
+          has_many: Não é possível excluir o registro pois existem %{record} dependentes
       models:
         course:
           attributes:

@@ -9,31 +9,31 @@
         <div class="sm:col-span-4">
           <%= f.label :name, "Nome", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
-            <%= f.text_field :name, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", placeholder: "João Silva", required: true %>
+            <%= f.text_field :name, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none placeholder:text-gray-400 focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm", placeholder: "João Silva", required: true %>
           </div>
         </div>
         <div class="sm:col-span-4">
           <%= f.label :email, "Email", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
-            <%= f.email_field :email, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", placeholder: "email@exemplo.com", required: true %>
+            <%= f.email_field :email, autocomplete: "email", class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none placeholder:text-gray-400 focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm", placeholder: "email@exemplo.com", required: true %>
           </div>
         </div>
         <div class="sm:col-span-4">
           <%= f.label :phone, "Telefone", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
-            <%= f.telephone_field :phone, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", placeholder: "11999999999", required: true %>
+            <%= f.telephone_field :phone, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none placeholder:text-gray-400 focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm", placeholder: "11999999999", required: true %>
           </div>
         </div>
         <div class="sm:col-span-4">
           <%= f.label :contacted, "Entrou em contato com o aluno?", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
-            <%= f.select :contacted, [["Sim", true], ["Não", false]], {}, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
+            <%= f.select :contacted, [["Sim", true], ["Não", false]], {}, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm" %>
           </div>
         </div>
         <div class="sm:col-span-4">
           <%= f.label :enrolled, "Aluno se matriculou?", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
-            <%= f.select :enrolled, [["Sim", true], ["Não", false]], {}, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
+            <%= f.select :enrolled, [["Sim", true], ["Não", false]], {}, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm" %>
           </div>
         </div>
       </div>
