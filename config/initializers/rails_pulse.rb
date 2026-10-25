@@ -454,7 +454,7 @@ RailsPulse.configure do |config|
   # ====================================================================================================
   # New settings from this gem version. Existing values above were not changed.
   # Review with git diff and keep or discard hunks as you like.
-  
+
 
   # ====================================================================================================
   #                                    API TOKENS AND DEPLOYMENT TRACKING
