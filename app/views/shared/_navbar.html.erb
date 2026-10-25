@@ -9,10 +9,11 @@
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
           <!-- Current: "border-yellow-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+          <% certificate_validation_active = current_page?("/certificates/new") || (controller_path == "certificates" && @certificate.present?) %>
           <%= link_to "Home", root_path, class: "#{current_page?("/") ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
           <%= link_to "Cursos", courses_path, class: "#{(current_page?("/courses") || request.path&.include?("courses")) ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
           <%= link_to "Contato", new_contact_path, class: "#{current_page?("/contacts/new") ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
-          <%= link_to "Validar Certificado", new_certificate_path, class: "#{current_page?("/certificates/new") ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
+          <%= link_to "Validar Certificado", new_certificate_path, class: "#{certificate_validation_active ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
         </div>
       </div>
       <% if current_admin || current_student %>

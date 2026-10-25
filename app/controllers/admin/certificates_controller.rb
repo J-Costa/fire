@@ -4,7 +4,17 @@ class Admin::CertificatesController < Admin::BaseController
   before_action :set_certificate, only: %i[edit update]
 
   def index
-    @certificates = Certificate.order(expires_at: :desc)
+    @status = params[:status].presence_in(Certificate.statuses.keys)
+    @certificates = Certificate.where(status: @status) if @status
+    @certificates ||= Certificate.all
+    @certificates = @certificates.order(expires_at: :desc)
+  end
+
+  def expire
+    expired_count = Certificate.mark_expired!
+    status = params[:status].presence_in(Certificate.statuses.keys)
+
+    redirect_to admin_certificates_path(status: status), notice: "#{expired_count} certificado(s) atualizado(s) como expirado(s)"
   end
 
   def new; end

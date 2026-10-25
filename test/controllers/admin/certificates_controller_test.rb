@@ -14,6 +14,16 @@ class Admin::CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_match courses(:one).name, @response.body
   end
 
+  test 'should filter index by status' do
+    get admin_certificates_path, params: { status: 'expired' }
+
+    assert_response :success
+    assert_match certificates(:expired).code, @response.body
+    refute_match certificates(:active).code, @response.body
+    refute_match certificates(:revoked).code, @response.body
+    assert_select "a[href='#{admin_certificates_path(status: 'expired')}']", text: 'Certificado expirado'
+  end
+
   test 'should get new' do
     get new_admin_certificate_path
 
@@ -88,6 +98,16 @@ class Admin::CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_equal '2026-10-25', certificate.issued_at.to_date.to_s
     assert_equal '2028-10-25', certificate.expires_at.to_date.to_s
     assert_equal 'revoked', certificate.status
+  end
+
+  test 'should update expired certificates in batch' do
+    certificates(:active).update_column(:expires_at, 1.day.ago)
+
+    patch expire_admin_certificates_path, params: { status: 'expired' }
+
+    assert_redirected_to admin_certificates_path(status: 'expired')
+    assert_equal '1 certificado(s) atualizado(s) como expirado(s)', flash[:notice]
+    assert_equal 'expired', certificates(:active).reload.status
   end
 
   test 'should not update certificate with invalid data' do
