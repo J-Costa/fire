@@ -131,6 +131,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_26_230000) do
     t.index ["started_at"], name: "index_rails_pulse_deployments_on_started_at"
   end
 
+  create_table "rails_pulse_events", force: :cascade do |t|
+    t.string "kind", null: false, comment: "What noticed it, e.g. writer_heartbeat"
+    t.string "subject", comment: "Who it is about: host:pid, rule name, job name, exception class"
+    t.string "outcome", null: false, comment: "sampled, triggered, clean, insufficient_data, ran"
+    t.decimal "value", precision: 15, scale: 6, comment: "The number behind it: requests dropped since the last sample, or the triggered metric value"
+    t.datetime "occurred_at", null: false
+    t.text "message"
+    t.text "metadata", comment: "JSON with the kind-specific detail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kind", "occurred_at"], name: "index_rp_events_on_kind_and_occurred_at"
+    t.index ["kind", "subject", "occurred_at"], name: "index_rp_events_on_kind_subject_and_occurred_at"
+  end
+
   create_table "rails_pulse_exception_groups", force: :cascade do |t|
     t.string "fingerprint", null: false, comment: "SHA256 of exception_class + relative first app-code location"
     t.string "exception_class", null: false, comment: "e.g. ActiveRecord::RecordNotFound"

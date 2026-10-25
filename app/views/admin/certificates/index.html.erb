@@ -1,0 +1,83 @@
+<div class="m-5 border-2 rounded-md shadow-sm">
+	<div class="m-2">
+		<div class="px-4 sm:px-6 lg:px-8">
+			<div class="sm:flex sm:items-center">
+				<div class="sm:flex-auto">
+					<h1 class="text-base font-semibold leading-6 text-gray-900">Certificados</h1>
+					<p class="mt-2 text-sm text-gray-700">Lista de todos os certificados criados.</p>
+				</div>
+									<div class="mt-4 flex flex-col gap-3 sm:ml-16 sm:mt-0 sm:flex-row sm:items-end">
+										<div>
+											<span class="block text-xs font-medium text-gray-700">Filtrar por situação</span>
+											<div class="mt-1 flex flex-wrap gap-2">
+												<% status_filters = [
+													["Todos", nil, "bg-gray-100 text-gray-700 ring-gray-600/20"],
+													["Certificado válido", "active", "bg-emerald-50 text-emerald-700 ring-emerald-600/20"],
+													["Certificado expirado", "expired", "bg-amber-50 text-amber-700 ring-amber-600/20"],
+													["Certificado revogado", "revoked", "bg-red-50 text-red-700 ring-red-600/20"]
+												] %>
+												<% status_filters.each do |label, status, color_classes| %>
+													<%= link_to label, admin_certificates_path(status: status), class: "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset hover:opacity-80 #{color_classes} #{@status == status ? 'ring-2 ring-offset-1' : ''}" %>
+												<% end %>
+											</div>
+										</div>
+										<%= button_to "Atualizar expirados", expire_admin_certificates_path, method: :patch, params: { status: @status }, class: "rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 hover:cursor-pointer" %>
+										<%= link_to "Novo certificado", new_admin_certificate_path, class: "rounded-md bg-red-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-500" %>
+									</div>
+			</div>
+			<div class="mt-8 flow-root">
+				<div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+					<div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+						<table class="min-w-full divide-y divide-gray-300">
+							<thead>
+								<tr>
+									<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Aluno</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Curso</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Código</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Situação</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Emitido em</th>
+									<th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Válido até</th>
+									<th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
+										<span class="sr-only">Editar</span>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="bg-white">
+								<% if @certificates.any? %>
+									<% @certificates.each do |certificate| %>
+										<% status_styles = {
+											"active" => "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
+											"expired" => "bg-amber-50 text-amber-700 ring-amber-600/20",
+											"revoked" => "bg-red-50 text-red-700 ring-red-600/20"
+										} %>
+										<% status = certificate.effective_status.to_s %>
+										<tr class="even:bg-gray-50">
+											<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"><%= certificate.user.name %></td>
+											<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= certificate.course.name %></td>
+											<td class="whitespace-nowrap px-3 py-4 text-sm font-medium"><%= link_to certificate.code, certificate_path(certificate.code), class: "text-red-600 hover:text-red-900" %></td>
+											<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+												<span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset <%= status_styles.fetch(status, "bg-gray-50 text-gray-700 ring-gray-600/20") %>"><%= t("certificates.status.#{status}") %></span>
+											</td>
+											<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= l certificate.issued_at.to_date, format: :long %></td>
+											<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= l certificate.expires_at.to_date, format: :long %></td>
+																							<td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+																								<% if (whatsapp_url = certificate_whatsapp_url(certificate)) %>
+																									<%= link_to "WhatsApp", whatsapp_url, target: "_blank", rel: "noopener", class: "mr-3 text-green-600 hover:text-green-900" %>
+																								<% end %>
+																								<%= link_to "Editar", edit_admin_certificate_path(certificate), class: "text-red-600 hover:text-red-900" %>
+																							</td>
+										</tr>
+									<% end %>
+								</tbody>
+							<% else %>
+								<tr class="even:bg-gray-50">
+									<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3" colspan="7">Nenhum certificado criado.</td>
+								</tr>
+							<% end %>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

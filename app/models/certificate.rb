@@ -12,6 +12,11 @@ class Certificate < ApplicationRecord
   before_validation :generate_unique_code, on: :create
   before_validation :set_expires_at_and_issued_at, on: :create
 
+  def self.mark_expired!
+    where(status: :active)
+      .where('expires_at < ?', Time.current.beginning_of_day)
+      .update_all(status: statuses[:expired], updated_at: Time.current)
+  end
 
   def valid_certificate?
     active? && expires_at_in_future?

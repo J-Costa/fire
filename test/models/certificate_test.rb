@@ -112,4 +112,21 @@ class CertificateTest < ActiveSupport::TestCase
 
     assert_equal :active, certificate.effective_status
   end
+
+  test 'mark_expired! updates only active certificates past expiration' do
+    active_certificate = certificates(:active)
+    active_certificate.update_column(:expires_at, 1.day.ago)
+
+    assert_equal 1, Certificate.mark_expired!
+    assert_equal 'expired', active_certificate.reload.status
+    assert_equal 'revoked', certificates(:revoked).status
+  end
+
+  test 'mark_expired! does not update active certificates expiring today' do
+    active_certificate = certificates(:active)
+    active_certificate.update_column(:expires_at, Time.current.end_of_day)
+
+    assert_equal 0, Certificate.mark_expired!
+    assert_equal 'active', active_certificate.reload.status
+  end
 end
