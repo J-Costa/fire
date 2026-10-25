@@ -61,6 +61,9 @@
 											<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= l certificate.issued_at.to_date, format: :long %></td>
 											<td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= l certificate.expires_at.to_date, format: :long %></td>
 																							<td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+																								<% if (whatsapp_url = certificate_whatsapp_url(certificate)) %>
+																									<%= link_to "WhatsApp", whatsapp_url, target: "_blank", rel: "noopener", class: "mr-3 text-green-600 hover:text-green-900" %>
+																								<% end %>
 																								<%= link_to "Editar", edit_admin_certificate_path(certificate), class: "text-red-600 hover:text-red-900" %>
 																							</td>
 										</tr>

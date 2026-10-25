@@ -12,6 +12,7 @@ class Admin::CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_match certificates(:active).code, @response.body
     assert_match users(:student_one).name, @response.body
     assert_match courses(:one).name, @response.body
+    assert_match 'https://wa.me/5511912345678', @response.body
   end
 
   test 'should filter index by status' do

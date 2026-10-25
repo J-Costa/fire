@@ -44,6 +44,17 @@
         </div>
       </dl>
 
+      <div class="mt-8 border-t border-gray-100 pt-8 text-center">
+        <h2 class="font-semibold text-gray-900">Validar este certificado</h2>
+        <div class="mx-auto mt-4 flex max-w-48 items-center justify-center rounded-md bg-white p-3 leading-none ring-1 ring-gray-200">
+          <%= certificate_qr_svg(@certificate) %>
+        </div>
+        <p class="mt-3 text-sm text-gray-600">Aponte a câmera do celular para o QR Code.</p>
+        <% if (whatsapp_url = certificate_whatsapp_url(@certificate)) %>
+          <%= link_to "Compartilhar via WhatsApp", whatsapp_url, target: "_blank", rel: "noopener", class: "mt-4 inline-flex rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-500" %>
+        <% end %>
+      </div>
+
       <% if @certificate.course.description.present? %>
         <div class="mt-8 rounded-md bg-gray-50 p-5">
           <h2 class="font-semibold text-gray-900"><%= t("certificates.labels.about_course") %></h2>
