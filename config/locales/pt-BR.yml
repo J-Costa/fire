@@ -195,6 +195,9 @@ pt-BR:
     select:
       prompt: Por favor selecione
     submit:
+      certificate:
+        create: Criar certificado
+        update: Atualizar certificado
       create: Criar %{model}
       submit: Salvar %{model}
       update: Atualizar %{model}

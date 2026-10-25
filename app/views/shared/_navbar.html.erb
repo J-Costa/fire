@@ -12,6 +12,7 @@
           <%= link_to "Home", root_path, class: "#{current_page?("/") ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
           <%= link_to "Cursos", courses_path, class: "#{(current_page?("/courses") || request.path&.include?("courses")) ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
           <%= link_to "Contato", new_contact_path, class: "#{current_page?("/contacts/new") ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
+          <%= link_to "Validar Certificado", new_certificate_path, class: "#{current_page?("/certificates/new") ? 'border-yellow-500 text-gray-900' : ''} inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-200 hover:border-gray-300 hover:text-gray-700" %>
         </div>
       </div>
       <% if current_admin || current_student %>
@@ -19,7 +20,7 @@
           <!-- Profile dropdown -->
           <div class="relative ml-3">
             <div>
-              <button data-action="click->navbar#toggleProfileMenu" type="button" class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
+              <button data-action="click->navbar#toggleProfileMenu" type="button" class="relative flex cursor-pointer rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
                 <div class="h-8 w-8 rounded-full flex items-center justify-center">
@@ -42,6 +43,7 @@
               <%= link_to "Candidaturas", admin_enrollments_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" %>
               <%= link_to "Gerenciar cursos", admin_courses_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" %>
               <%= link_to "Gerenciar alunos", admin_students_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" %>
+              <%= link_to "Gerenciar certificados", admin_certificates_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300" %>
               <div class="py-1">
                 <%= link_to destroy_admin_session_path, data: { "turbo-method": :delete }, class: "flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 hover:text-red-500" do %>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
@@ -58,7 +60,7 @@
           <!-- Profile dropdown -->
           <div class="relative ml-3">
             <div>
-              <button data-action="click->navbar#toggleLoginMenu" type="button" class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-haspopup="true" aria-expanded="false">
+              <button data-action="click->navbar#toggleLoginMenu" type="button" class="relative flex cursor-pointer rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" aria-haspopup="true" aria-expanded="false">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
                 <div class="h-8 w-8 rounded-full flex items-center justify-center">
@@ -94,7 +96,7 @@
       <% end %>
       <div class="-mr-2 flex items-center sm:hidden">
         <!-- Mobile menu button -->
-        <button data-action="click->navbar#toggleMobileMenu" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-red-400 hover:bg-red-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-inset bg-red-100 focus:ring-red-500" aria-controls="mobile-menu" aria-expanded="false">
+        <button data-action="click->navbar#toggleMobileMenu" type="button" class="relative inline-flex cursor-pointer items-center justify-center rounded-md p-2 text-red-400 hover:bg-red-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-inset bg-red-100 focus:ring-red-500" aria-controls="mobile-menu" aria-expanded="false">
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open main menu</span>
           <!--
@@ -147,6 +149,7 @@
           <%= link_to "Candidaturas", admin_enrollments_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/admin/enrollments') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
           <%= link_to "Gerenciar cursos", admin_courses_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/admin/courses') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
           <%= link_to "Gerenciar alunos", admin_students_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/admin/students') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
+          <%= link_to "Gerenciar certificados", admin_certificates_path, data: { action: "click->navbar#closeMobileMenu" }, class: "#{current_page?('/admin/certificates') ? 'bg-yellow-50 border-yellow-500 text-red-700 border-l-4' : ''} block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700" %>
           <%= link_to destroy_admin_session_path, data: { action: "click->navbar#closeMobileMenu", "turbo-method": :delete }, class: "flex px-4 py-2 text-base font-medium text-gray-200 hover:bg-gray-100 hover:text-gray-800" do %>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
