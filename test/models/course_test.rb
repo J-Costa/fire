@@ -71,4 +71,20 @@ class CourseTest < ActiveSupport::TestCase
     assert_equal @course.description, @course.certificate_paragraph_2
     assert_equal @course.description, @course.program_content
   end
+
+  test 'program subjects ignore invalid entries and normalize values' do
+    @course.program_data = {
+      subjects: [nil, 'invalid', { ' ' => 10 }, { '  Atendimento  ' => '8' }],
+      descriptions: [{ 'other' => 'Outra descrição' }]
+    }
+
+    assert_equal [{ name: 'Atendimento', hours: 8 }], @course.program_subjects
+    assert_equal @course.description, @course.certificate_paragraph_1
+  end
+
+  test 'falls back when program data is not a hash' do
+    @course.program_data = nil
+
+    assert_equal @course.description, @course.program_content
+  end
 end

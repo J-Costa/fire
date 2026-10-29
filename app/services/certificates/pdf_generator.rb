@@ -2,6 +2,8 @@ require 'prawn'
 require 'stringio'
 require 'chunky_png'
 
+Prawn::Fonts::AFM.hide_m17n_warning = true
+
 module Certificates
   class PdfGenerator
     def initialize(certificate, verification_url:, school_data: SchoolData.new, instructor_data: InstructorData.new)
@@ -35,7 +37,7 @@ module Certificates
        pdf.text_box pdf_text(certificate.user.name),
               at: [48, top - 277], width: pdf.bounds.width - 96, height: 34,
               align: :center, size: 24, style: :bold
-       pdf.text_box "CPF: #{certificate.user&.document || '123.456.789-09'}",
+      pdf.text_box "CPF: #{certificate.user.document || '123.456.789-09'}",
               at: [48, top - 314], width: pdf.bounds.width - 96, height: 20,
               align: :center, size: 11, color: '444444'
        render_certificate_period(pdf, top: top)
@@ -77,7 +79,7 @@ module Certificates
       pdf.stroke_line 90, footer_y, 260, footer_y
       pdf.stroke_line pdf.bounds.width - 260, footer_y, pdf.bounds.width - 90, footer_y
       pdf.text_box pdf_text(certificate.user.name), at: [90, footer_y - 6], width: 170, height: 20, align: :center, size: 10, style: :bold
-      pdf.text_box pdf_text("Aluno | CPF: #{certificate.user&.document || '123.456.789-09'}"), at: [90, footer_y - 24], width: 170, height: 20, align: :center, size: 9
+      pdf.text_box pdf_text("Aluno | CPF: #{certificate.user.document || '123.456.789-09'}"), at: [90, footer_y - 24], width: 170, height: 20, align: :center, size: 9
       pdf.text_box pdf_text(instructor_data.name || instructor_data.position), at: [pdf.bounds.width - 260, footer_y - 6], width: 170, height: 20, align: :center, size: 10, style: :bold
       pdf.text_box pdf_text("CPF: #{instructor_data.document || '123.456.789-09'}"), at: [pdf.bounds.width - 260, footer_y - 24], width: 170, height: 20, align: :center, size: 9
       pdf.text_box pdf_text(instructor_data.position), at: [pdf.bounds.width - 260, footer_y - 42], width: 170, height: 20, align: :center, size: 9
@@ -149,10 +151,6 @@ module Certificates
 
       pdf.fill_color '111111'
       pdf.move_down rows.length * row_height
-    end
-
-    def course_content
-      certificate.course.program_content
     end
 
     def pdf_metadata
