@@ -1,7 +1,7 @@
 class Admin::CertificatesController < Admin::BaseController
   before_action :prepare_certificate, only: %i[new create]
   before_action :load_enrollments, only: %i[new create edit update]
-  before_action :set_certificate, only: %i[edit update]
+  before_action :set_certificate, only: %i[edit update pdf]
 
   def index
     @status = params[:status].presence_in(Certificate.statuses.keys)
@@ -39,6 +39,15 @@ class Admin::CertificatesController < Admin::BaseController
       flash.now[:alert] = @certificate.errors.full_messages.to_sentence
       render :edit, status: :unprocessable_content
     end
+  end
+
+  def pdf
+    pdf = Certificates::PdfGenerator.new(@certificate, verification_url: certificate_url(@certificate.code)).render
+
+    send_data pdf,
+              filename: "certificado-#{@certificate.code}.pdf",
+              type: 'application/pdf',
+              disposition: 'attachment'
   end
 
   private

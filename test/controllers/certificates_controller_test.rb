@@ -37,7 +37,7 @@ class CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_includes response.body, @certificate.course.name
     assert_includes response.body, @certificate.user.name
     assert_includes response.body, '<svg'
-    assert_includes response.body, 'https://wa.me/5511912345678'
+    refute_includes response.body, 'wa.me'
   end
 
   test 'should show active certificate as expired after its expiration date' do

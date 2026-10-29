@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :passwords, only: %i[new create edit update]
     resources :certificates, only: %i[index new create edit update] do
       patch :expire, on: :collection
+      get :pdf, on: :member
     end
   end
 
