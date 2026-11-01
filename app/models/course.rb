@@ -9,6 +9,18 @@ class Course < ApplicationRecord
   validates :name, uniqueness: true
   validates :description, length: { minimum: 10 }
   validates :featured, numericality: { in: FEATURED_RANGE }
+  validate :program_data_json_is_valid
+
+  def program_data_json
+    JSON.pretty_generate(program_data || {})
+  end
+
+  def program_data_json=(value)
+    self.program_data = JSON.parse(value)
+    @program_data_json_error = nil
+  rescue JSON::ParserError => error
+    @program_data_json_error = error.message
+  end
 
   def certificate_paragraph_1
     program_description(1).presence || description
@@ -43,7 +55,20 @@ class Course < ApplicationRecord
     program_value(:workload_hours).to_i
   end
 
+  def program_descriptions
+    {
+      1 => program_description(1),
+      2 => program_description(2)
+    }
+  end
+
   private
+
+  def program_data_json_is_valid
+    return unless @program_data_json_error
+
+    errors.add(:program_data_json, "não é um JSON válido: #{@program_data_json_error}")
+  end
 
   def program_value(key)
     data = program_data.is_a?(Hash) ? program_data : {}

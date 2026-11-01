@@ -55,4 +55,18 @@ class ContactsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test 'should normalize formatted phone numbers' do
+    assert_changes('Student.count') do
+      post contacts_url, params: {
+        contact: {
+          name: 'joão',
+          email: 'formatted@joao.com',
+          phone: '(11) 99999-9999' },
+        enrollments: {
+          course_ids: [courses(:one).id] } }
+    end
+
+    assert_equal '11999999999', Student.find_by(email: 'formatted@joao.com').phone
+  end
 end
