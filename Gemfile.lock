@@ -439,6 +439,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   mailjet
+  matrix
   maxminddb
   mocha
   ostruct
