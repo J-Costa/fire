@@ -1,5 +1,5 @@
 <div class="m-10 p-4 border-1 shadow-sm">
-  <%= form_for [:admin, @student], html: { class: "space-y-12 p-4" } do |f| %>
+  <%= form_for [:admin, @student], html: { class: "space-y-12 p-4", data: { controller: "phone-mask document-mask", action: "submit->phone-mask#unmask submit->document-mask#unmask" } } do |f| %>
     <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
       <div>
         <h2 class="text-base font-semibold leading-7 text-gray-900"><%= title %></h2>
@@ -21,7 +21,13 @@
         <div class="sm:col-span-4">
           <%= f.label :phone, "Telefone", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
-            <%= f.telephone_field :phone, class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none placeholder:text-gray-400 focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm", placeholder: "11999999999", required: true %>
+            <%= f.telephone_field :phone, inputmode: "numeric", autocomplete: "tel", class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none placeholder:text-gray-400 focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm", placeholder: "(11) 99999-9999", required: true, data: { "phone-mask-target": "input", action: "input->phone-mask#format" } %>
+          </div>
+        </div>
+        <div class="sm:col-span-4">
+          <%= f.label :document, "CPF ou CNPJ", class: "block text-sm font-medium leading-6 text-gray-900" %>
+          <div class="mt-2">
+            <%= f.text_field :document, inputmode: "numeric", placeholder: "CPF ou CNPJ", class: "block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm outline-none placeholder:text-gray-400 focus:border-red-600 focus:ring-2 focus:ring-red-600 sm:text-sm", data: { "document-mask-target": "input", action: "input->document-mask#format" } %>
           </div>
         </div>
         <div class="sm:col-span-4">

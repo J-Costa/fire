@@ -25,12 +25,13 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    resources :students, only: %i[index new edit update]
+    resources :students, only: %i[index new create edit update]
     resources :courses, only: %i[index show new create edit update destroy]
     resources :enrollments, only: %i[index]
     resources :passwords, only: %i[new create edit update]
     resources :certificates, only: %i[index new create edit update] do
       patch :expire, on: :collection
+      get :pdf, on: :member
     end
   end
 

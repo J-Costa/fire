@@ -49,7 +49,7 @@
         </dl>
       </div>
     </div>
-    <%= form_for @student, as: :contact, url: contacts_path, html: { class: "px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48" } do |f| %>
+    <%= form_for @student, as: :contact, url: contacts_path, html: { class: "px-6 pb-24 pt-20 sm:pb-32 lg:px-8 lg:py-48", data: { controller: "phone-mask", action: "submit->phone-mask#unmask" } } do |f| %>
       <div class="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div class="sm:col-span-2">
@@ -67,7 +67,7 @@
           <div class="sm:col-span-2">
             <%= label :phone, "Telefone para contato", class: "block text-sm font-semibold leading-6 text-gray-900" %>
             <div class="mt-2.5">
-              <%= f.phone_field :phone, class: "block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
+              <%= f.phone_field :phone, inputmode: "numeric", autocomplete: "tel", placeholder: "(11) 99999-9999", class: "block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", data: { "phone-mask-target": "input", action: "input->phone-mask#format" } %>
             </div>
           </div>
           <h2 class="mt-2.5 font-medium text-gray-900">Cursos de interesse</h2>

@@ -47,4 +47,44 @@ class CourseTest < ActiveSupport::TestCase
     @course.featured = 0
     refute @course.valid?
   end
+
+  test 'certificate paragraphs use program data when available' do
+    @course.program_data = {
+      'workload_hours' => 40,
+      'subjects' => [{ 'Primeiros socorros' => 40 }],
+      'descriptions' => [
+        { '1' => 'Primeiro parágrafo do certificado.' },
+        { '2' => 'Segundo parágrafo do certificado.' }
+      ]
+    }
+
+    assert_equal 'Primeiro parágrafo do certificado.', @course.certificate_paragraph_1
+    assert_equal 'Segundo parágrafo do certificado.', @course.certificate_paragraph_2
+    assert_includes @course.program_content, 'Primeiros socorros'
+    refute_includes @course.program_content, 'paragraph_1'
+  end
+
+  test 'certificate paragraphs fall back to course text' do
+    @course.program_data = {}
+
+    assert_equal @course.description, @course.certificate_paragraph_1
+    assert_equal @course.description, @course.certificate_paragraph_2
+    assert_equal @course.description, @course.program_content
+  end
+
+  test 'program subjects ignore invalid entries and normalize values' do
+    @course.program_data = {
+      subjects: [nil, 'invalid', { ' ' => 10 }, { '  Atendimento  ' => '8' }],
+      descriptions: [{ 'other' => 'Outra descrição' }]
+    }
+
+    assert_equal [{ name: 'Atendimento', hours: 8 }], @course.program_subjects
+    assert_equal @course.description, @course.certificate_paragraph_1
+  end
+
+  test 'falls back when program data is not a hash' do
+    @course.program_data = nil
+
+    assert_equal @course.description, @course.program_content
+  end
 end

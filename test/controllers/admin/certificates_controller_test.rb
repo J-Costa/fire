@@ -41,6 +41,19 @@ class Admin::CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_match users(:student_one).name, @response.body
     assert_match courses(:one).name, @response.body
     assert_match 'Atualizar certificado', @response.body
+    assert_match 'Baixar certificado em PDF', @response.body
+    assert_match 'WhatsApp', @response.body
+  end
+
+  test 'should download certificate PDF' do
+    certificate = certificates(:active)
+
+    get pdf_admin_certificate_path(certificate)
+
+    assert_response :success
+    assert_equal 'application/pdf', response.media_type
+    assert_includes response.body, '%PDF'
+    assert_includes response.headers['Content-Disposition'], "certificado-#{certificate.code}.pdf"
   end
 
   test 'should create certificate' do
@@ -61,6 +74,27 @@ class Admin::CertificatesControllerTest < ActionDispatch::IntegrationTest
     certificate = Certificate.order(:created_at).last
     assert_equal enrollments(:two), certificate.enrollment
     assert_equal 'active', certificate.status
+  end
+
+  test 'should create enrollment and certificate from student and course' do
+    student = Student.create!(name: 'Student Without Enrollment', email: 'without-enrollment@student.com', phone: '11999999999')
+
+    assert_difference(['Enrollment.count', 'Certificate.count']) do
+      post admin_certificates_path, params: {
+        certificate: {
+          student_id: student.id,
+          course_id: courses(:one).id,
+          issued_at: '2026-10-25T10:00',
+          expires_at: '2027-10-25T10:00',
+          status: 'active'
+        }
+      }
+    end
+
+    assert_redirected_to admin_certificates_path
+    certificate = Certificate.order(:created_at).last
+    assert_equal student.id, certificate.user.id
+    assert_equal courses(:one), certificate.course
   end
 
   test 'should not create certificate with invalid data' do
@@ -126,5 +160,13 @@ class Admin::CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_content
     assert_match 'não pode ficar em branco', @response.body
     assert_equal enrollments(:one), certificate.reload.enrollment
+  end
+end
+
+class Admin::CertificatePdfAuthenticationTest < ActionDispatch::IntegrationTest
+  test 'should require admin authentication to download certificate PDF' do
+    get pdf_admin_certificate_path(certificates(:active))
+
+    assert_redirected_to new_admin_session_path
   end
 end

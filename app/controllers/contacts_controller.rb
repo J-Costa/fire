@@ -40,7 +40,9 @@ class ContactsController < ApplicationController
   end
 
   def student_params
-    params.require(:contact).permit(:name, :email, :phone).merge(current_sign_in_ip: request.remote_ip)
+    permitted = params.require(:contact).permit(:name, :email, :phone)
+    permitted[:phone] = permitted[:phone].to_s.gsub(/\D/, '')
+    permitted.merge(current_sign_in_ip: request.remote_ip)
   end
 
   def course_params

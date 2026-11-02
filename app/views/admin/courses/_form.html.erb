@@ -1,5 +1,10 @@
-<div class="m-10 p-4 border-1 shadow-sm">
+<% subjects = @course.program_subjects.presence || [{ name: "", hours: "" }] %>
+<% descriptions = @course.program_descriptions %>
+<% total_hours = subjects.sum { |subject| subject[:hours].to_i } %>
+
+<div class="m-10 p-4 border shadow-sm" data-controller="program-editor" data-action="submit->program-editor#submit">
   <%= form_for [:admin, @course], html: { class: "space-y-12 p-4", multipart: true } do |f| %>
+    <%= f.hidden_field :program_data_json, data: { "program-editor-target": "json" } %>
     <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
       <div>
         <h2 class="text-base font-semibold leading-7 text-gray-900"><%= title %></h2>
@@ -27,6 +32,76 @@
           <div class="mt-2">
             <%= f.text_area :details, rows: @course&.details&.lines&.count, class: "block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", require: true %>
             <p class="mt-3 text-sm leading-6 text-gray-600">Detalhes e maiores informações sobre o curso.</p>
+          </div>
+        </div>
+        <div class="col-span-full border-t border-gray-900/10 pt-8">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-semibold leading-7 text-gray-900">Conteúdo programático</h3>
+              <p class="mt-1 text-sm leading-6 text-gray-600">Preencha as matérias e os textos usados no certificado.</p>
+            </div>
+            <label class="inline-flex cursor-pointer items-center gap-3 text-sm font-medium text-gray-700">
+              <span>Modo avançado</span>
+              <%= check_box_tag "program_editor_advanced", "1", false, class: "peer sr-only", data: { "program-editor-target": "advancedToggle", action: "program-editor#toggleMode" } %>
+              <span class="relative h-6 w-11 rounded-full bg-gray-300 transition peer-checked:bg-red-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-600 peer-focus:ring-offset-2 after:absolute after:left-1 after:top-1 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition peer-checked:after:translate-x-5"></span>
+            </label>
+          </div>
+
+          <div class="mt-6 space-y-8" data-program-editor-target="guided">
+            <section>
+              <div class="mb-3 flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <h4 class="text-sm font-semibold leading-6 text-gray-900">Matérias</h4>
+                  <p class="text-sm text-gray-600">Adicione quantas matérias forem necessárias.</p>
+                </div>
+                <button type="button" class="rounded-md border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50" data-action="program-editor#addSubject" title="Adicionar matéria">+ Adicionar matéria</button>
+              </div>
+              <div class="space-y-3" data-program-editor-target="subjects">
+                <% subjects.each do |subject| %>
+                  <div class="grid grid-cols-[minmax(0,1fr)_8rem_auto] items-end gap-3" data-program-editor-subject>
+                    <div>
+                      <label class="block text-xs font-medium text-gray-600">Matéria</label>
+                      <input type="text" value="<%= subject[:name] %>" class="mt-1 block w-full rounded-md border-0 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600" data-subject-name>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-medium text-gray-600">Horas</label>
+                      <input type="number" min="0" value="<%= subject[:hours] %>" class="mt-1 block w-full rounded-md border-0 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600" data-subject-hours data-action="input->program-editor#updateTotal">
+                    </div>
+                    <button type="button" class="mb-0.5 rounded-md px-2 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-100 hover:text-red-600" data-action="program-editor#removeSubject" title="Remover matéria" aria-label="Remover matéria">&times;</button>
+                  </div>
+                <% end %>
+              </div>
+              <div class="mt-4 flex flex-wrap items-center gap-3 text-sm text-gray-600">
+                <span>Total das matérias: <strong data-program-editor-target="total"><%= total_hours %></strong> horas</span>
+                <button type="button" class="rounded-md border border-gray-300 px-3 py-1.5 font-semibold text-gray-700 hover:bg-gray-50" data-action="program-editor#calculateWorkload">Usar total como carga horária</button>
+              </div>
+            </section>
+
+            <section class="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div>
+                <label for="program_description_1" class="block text-sm font-medium leading-6 text-gray-900">Parágrafo 1 do certificado</label>
+                <textarea id="program_description_1" rows="7" class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600" data-program-editor-target="description1"><%= descriptions[1] %></textarea>
+              </div>
+              <div>
+                <label for="program_description_2" class="block text-sm font-medium leading-6 text-gray-900">Parágrafo 2 do certificado</label>
+                <textarea id="program_description_2" rows="7" class="mt-2 block w-full rounded-md border-0 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600" data-program-editor-target="description2"><%= descriptions[2] %></textarea>
+              </div>
+            </section>
+
+            <section>
+              <label for="program_workload_hours" class="block text-sm font-medium leading-6 text-gray-900">Carga horária total</label>
+              <div class="mt-2 flex max-w-sm items-center gap-3">
+                <input id="program_workload_hours" type="number" min="0" value="<%= @course.program_workload_hours %>" class="block w-32 rounded-md border-0 px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600" data-program-editor-target="workload">
+                <span class="text-sm text-gray-600">horas</span>
+              </div>
+              <p class="mt-2 text-sm text-gray-600">O valor pode ser calculado pelo total das matérias ou ajustado manualmente.</p>
+            </section>
+          </div>
+
+          <div class="mt-6 hidden" data-program-editor-target="advancedPanel">
+            <label for="program_data_json_advanced" class="block text-sm font-medium leading-6 text-gray-900">Dados do programa (JSON)</label>
+            <textarea id="program_data_json_advanced" rows="22" spellcheck="false" class="mt-2 block w-full rounded-md border-0 bg-gray-950 px-3 py-2 font-mono text-sm leading-6 text-gray-100 shadow-sm outline-none ring-1 ring-inset ring-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-600" data-program-editor-target="advanced"><%= @course.program_data_json %></textarea>
+            <p class="mt-3 text-sm leading-6 text-gray-600">Use este modo para editar estruturas que não aparecem no formulário guiado. O JSON será validado ao salvar.</p>
           </div>
         </div>
         <div class="col-span-full">

@@ -64,11 +64,18 @@ class Admin::CoursesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update course' do
     course = courses(:one)
+    program_data = {
+      'workload_hours' => 120,
+      'subjects' => [{ 'Atendimento' => 40 }],
+      'descriptions' => [{ '1' => 'Descricao atualizada.' }],
+      'certificate' => { 'issuer' => 'Fire Academy' }
+    }
     patch admin_course_path(course), params: {
       course: {
         name: 'Updated Course',
         description: 'This is an updated course.',
         featured: 1,
+        program_data_json: JSON.pretty_generate(program_data),
         marketing: fixture_file_upload('sample_image.jpg', 'image/jpg')
       }
     }
@@ -82,6 +89,24 @@ class Admin::CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'Updated Course', course.name
     assert_equal 'This is an updated course.', course.description
     assert_equal '1', course.featured
+    assert_equal program_data, course.program_data
+  end
+
+  test 'should not update course with invalid program data json' do
+    course = courses(:one)
+
+    patch admin_course_path(course), params: {
+      course: {
+        name: course.name,
+        description: course.description,
+        featured: 1,
+        program_data_json: '{ invalid json'
+      }
+    }
+
+    assert_response :unprocessable_content
+    assert_match 'não é um JSON válido', @response.body
+    assert_equal courses(:one).program_data, course.reload.program_data
   end
 
   test 'should not update course with invalid data' do

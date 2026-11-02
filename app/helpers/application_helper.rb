@@ -10,10 +10,13 @@ module ApplicationHelper
   end
 
   def certificate_whatsapp_url(certificate)
-    phone = certificate.user.phone.to_s.gsub(/\D/, '')
+    user = certificate.user
+    return unless user
+
+    phone = user.phone.to_s.gsub(/\D/, '')
     return if phone.length < 10 || phone.length > 11
 
-    message = "Olá #{certificate.user.name}, seu certificado está disponível para validação: #{certificate_public_url(certificate)}"
+    message = "Olá #{user.name}, seu certificado está disponível para validação: #{certificate_public_url(certificate)}"
     "https://wa.me/55#{phone}?text=#{ERB::Util.url_encode(message)}"
   end
 end
