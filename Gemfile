@@ -31,6 +31,7 @@ gem 'requestjs-rails'
 gem 'rails_pulse'
 gem 'rqrcode'
 gem 'prawn'
+gem 'matrix'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
