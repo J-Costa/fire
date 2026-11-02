@@ -33,6 +33,20 @@ class Admin::StudentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal '12345678909', student.document
   end
 
+  test 'should not create student with invalid params' do
+    assert_no_difference('Student.count') do
+      post admin_students_path, params: {
+        student: {
+          name: 'Invalid Student',
+          email: 'invalid@student.com'
+        }
+      }
+    end
+
+    assert_response :unprocessable_entity
+    assert flash.alert.present?
+  end
+
   test 'should update student name' do
     student = users(:student_one)
 
@@ -92,7 +106,7 @@ class Admin::StudentsControllerTest < ActionDispatch::IntegrationTest
   test 'should not update with invalid params' do
     student = users(:student_one)
 
-    patch admin_student_path(student), params: { student: { phone: 'invalid_phone' } }
+    patch admin_student_path(student), params: { student: { phone: '123' } }
 
     assert_response :unprocessable_entity
     assert flash.alert.present?
