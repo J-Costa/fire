@@ -10,12 +10,29 @@
           <%= label :enrollment_id, "Matrícula", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">
             <% if @enrollments.any? %>
-              <%= f.collection_select :enrollment_id, @enrollments, :id, ->(enrollment) { "#{enrollment.user.name} - #{enrollment.course.name}" }, { prompt: "Selecione o aluno e o curso" }, class: "block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6", required: true %>
+              <%= f.collection_select :enrollment_id, @enrollments, :id, ->(enrollment) { "#{enrollment.user.name} - #{enrollment.course.name}" }, { prompt: "Selecione o aluno e o curso" }, class: "block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
             <% else %>
-              <p class="text-sm leading-6 text-gray-600">Nenhuma matrícula encontrada. Cadastre uma matrícula antes de criar um certificado.</p>
+              <p class="text-sm leading-6 text-gray-600">Nenhuma matrícula encontrada. Escolha um aluno e um curso abaixo para criar uma.</p>
             <% end %>
           </div>
         </div>
+        <% unless @certificate.persisted? %>
+          <div class="col-span-full border-t border-gray-900/10 pt-6">
+            <p class="text-sm leading-6 text-gray-600">Ou crie uma matrícula selecionando o aluno e o curso.</p>
+          </div>
+          <div class="sm:col-span-3">
+            <%= label :student_id, "Aluno", class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= select_tag "certificate[student_id]", options_from_collection_for_select(@students, :id, :name, params.dig(:certificate, :student_id)), prompt: "Selecione o aluno", class: "block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
+            </div>
+          </div>
+          <div class="sm:col-span-3">
+            <%= label :course_id, "Curso", class: "block text-sm font-medium leading-6 text-gray-900" %>
+            <div class="mt-2">
+              <%= select_tag "certificate[course_id]", options_from_collection_for_select(@courses, :id, :name, params.dig(:certificate, :course_id)), prompt: "Selecione o curso", class: "block w-full rounded-md border-0 px-3 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6" %>
+            </div>
+          </div>
+        <% end %>
         <div class="sm:col-span-3">
           <%= label :status, "Situação", class: "block text-sm font-medium leading-6 text-gray-900" %>
           <div class="mt-2">

@@ -76,6 +76,27 @@ class Admin::CertificatesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'active', certificate.status
   end
 
+  test 'should create enrollment and certificate from student and course' do
+    student = Student.create!(name: 'Student Without Enrollment', email: 'without-enrollment@student.com', phone: '11999999999')
+
+    assert_difference(['Enrollment.count', 'Certificate.count']) do
+      post admin_certificates_path, params: {
+        certificate: {
+          student_id: student.id,
+          course_id: courses(:one).id,
+          issued_at: '2026-10-25T10:00',
+          expires_at: '2027-10-25T10:00',
+          status: 'active'
+        }
+      }
+    end
+
+    assert_redirected_to admin_certificates_path
+    certificate = Certificate.order(:created_at).last
+    assert_equal student.id, certificate.user.id
+    assert_equal courses(:one), certificate.course
+  end
+
   test 'should not create certificate with invalid data' do
     assert_no_difference('Certificate.count') do
       post admin_certificates_path, params: {

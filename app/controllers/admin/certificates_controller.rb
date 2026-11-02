@@ -1,6 +1,7 @@
 class Admin::CertificatesController < Admin::BaseController
   before_action :prepare_certificate, only: %i[new create]
   before_action :load_enrollments, only: %i[new create edit update]
+  before_action :load_certificate_options, only: %i[new create]
   before_action :set_certificate, only: %i[edit update pdf]
 
   def index
@@ -20,9 +21,13 @@ class Admin::CertificatesController < Admin::BaseController
   def new; end
 
   def create
-    @certificate = Certificate.new(certificate_params)
+    @certificate = Certificate.new(certificate_attributes)
+    saved = Enrollment.transaction do
+      @certificate.enrollment = enrollment_from_params
+      @certificate.save
+    end
 
-    if @certificate.save
+    if saved
       redirect_to admin_certificates_path, notice: 'Certificado cadastrado com sucesso'
     else
       flash.now[:alert] = @certificate.errors.full_messages.to_sentence
@@ -64,8 +69,28 @@ class Admin::CertificatesController < Admin::BaseController
     @enrollments = Enrollment.includes(:user, :course).order(created_at: :desc)
   end
 
+  def load_certificate_options
+    @students = Student.order(:name)
+    @courses = Course.order(:name)
+  end
+
   def certificate_params
-    params.require(:certificate).permit(:enrollment_id, :issued_at, :expires_at, :status)
+    params.require(:certificate).permit(:enrollment_id, :student_id, :course_id, :issued_at, :expires_at, :status)
+  end
+
+  def certificate_attributes
+    certificate_params.except(:enrollment_id, :student_id, :course_id)
+  end
+
+  def enrollment_from_params
+    enrollment_id = certificate_params[:enrollment_id]
+    return Enrollment.find_by(id: enrollment_id) if enrollment_id.present?
+
+    student_id = certificate_params[:student_id]
+    course_id = certificate_params[:course_id]
+    return if student_id.blank? || course_id.blank?
+
+    Enrollment.find_or_create_by(user_id: student_id, course_id: course_id)
   end
 
   def set_certificate

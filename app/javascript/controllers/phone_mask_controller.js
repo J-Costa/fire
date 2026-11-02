@@ -7,13 +7,13 @@ export default class extends Controller {
     this.format()
   }
 
+  unmask() {
+    this.inputTarget.value = this.inputTarget.value.replace(/\D/g, "")
+  }
+
   format() {
     const digits = this.inputTarget.value.replace(/\D/g, "").slice(0, 11)
     this.inputTarget.value = this.mask(digits)
-  }
-
-  unmask() {
-    this.inputTarget.value = this.inputTarget.value.replace(/\D/g, "")
   }
 
   mask(digits) {
