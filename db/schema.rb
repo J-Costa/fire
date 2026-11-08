@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_27_015842) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_08_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -264,6 +264,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_015842) do
     t.text "tags", comment: "JSON array of tags for filtering and categorization"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "hashed_sql", limit: 32, null: false
+    t.index ["hashed_sql"], name: "index_rails_pulse_queries_on_hashed_sql", unique: true
     t.index ["normalized_sql"], name: "index_rails_pulse_queries_on_normalized_sql", unique: true
   end
 

@@ -25,6 +25,8 @@ class Admin::StudentsController < Admin::BaseController
   def edit; end
 
   def update
+    @student.skip_reconfirmation!
+
     if @student.update(student_params)
       redirect_to admin_students_path, notice: 'Aluno atualizado com sucesso.'
     else

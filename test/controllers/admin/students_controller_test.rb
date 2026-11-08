@@ -61,6 +61,17 @@ class Admin::StudentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'UpdatedName', student.name
   end
 
+  test 'should update student email without sending confirmation' do
+    student = users(:student_one)
+
+    assert_no_emails do
+      patch admin_student_path(student), params: { student: { email: 'updated@student.com' } }
+    end
+
+    assert_redirected_to admin_students_path
+    assert_equal 'updated@student.com', student.reload.email
+  end
+
   test 'should update student contacted' do
     student = users(:student_one)
 
