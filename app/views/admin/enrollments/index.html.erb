@@ -31,7 +31,7 @@
         <% if @enrollments.any? %>
           <% @enrollments.each do |enrollment| %>
             <tr class="even:bg-gray-50">
-              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"><%= link_to enrollment.user.name, edit_admin_student_path(enrollment.user) %></td>
+              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3"><%= link_to enrollment.user.name, edit_admin_student_path(enrollment.user), class: "hover:underline hover:text-red-900" %></td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= enrollment.user.email %></td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= enrollment.user.phone %></td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Course.where(id: enrollment.course_ids.split(',')).map(&:name).to_sentence %></td>
