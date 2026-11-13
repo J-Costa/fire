@@ -37,7 +37,8 @@ Rails.application.routes.draw do
 
   resources :contacts, only: %i[new create]
   resources :courses, only: %i[show index]
-  resources :certificates, only: %i[new create show], param: :code
+  resources :certificates, only: %i[create show], param: :code
+  get 'certificados/validar', to: 'certificates#new', as: :new_certificate
 
   post 'cookies/accept', to: 'cookies#accept'
 end

@@ -1,6 +1,7 @@
 require 'prawn'
 require 'stringio'
 require 'chunky_png'
+require 'uri'
 
 Prawn::Fonts::AFM.hide_m17n_warning = true
 
@@ -93,6 +94,15 @@ module Certificates
       qr_png = RQRCode::QRCode.new(verification_url).as_png(size: 260, border_modules: 2)
       pdf.image StringIO.new(qr_png.to_blob), width: 58, at: [(pdf.bounds.width - 58) / 2, footer_y + 23]
       pdf.text_box 'QR Code de validação', at: [(pdf.bounds.width - 150) / 2, footer_y - 42], width: 150, height: 18, align: :center, size: 8, color: '666666'
+      verification_uri = URI.parse(verification_url)
+      new_certificate_url = Rails.application.routes.url_helpers.new_certificate_url(
+        host: verification_uri.host,
+        port: verification_uri.port,
+        protocol: verification_uri.scheme
+      )
+      pdf.text_box pdf_text("Acesse também #{new_certificate_url} e insira o código para verificar a validade do certificado."),
+                   at: [70, footer_y - 70], width: pdf.bounds.width - 140, height: 16,
+                   align: :center, size: 7, color: '666666', overflow: :shrink_to_fit
     end
 
     def render_second_page(pdf)
